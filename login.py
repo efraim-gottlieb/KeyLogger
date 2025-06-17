@@ -46,3 +46,4 @@ def delete_user(users_list,user):
         print(user,'deleted !')
     else:
         print('Cancelled !')
+
