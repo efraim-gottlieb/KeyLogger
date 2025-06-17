@@ -1,5 +1,1 @@
-hello kiryat sefer
-try to edit from github
-its work (i'm answer from laptop)
-try to update from pc to github
-git git
+שלום לכולם
