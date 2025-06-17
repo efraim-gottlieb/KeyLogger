@@ -17,7 +17,7 @@ def encrypt_text(text,encrypt_key):
     return encrypt_text
 
 
-def encryption_decryption(text,encrypt_key):
+def unencrypt_text(text,encrypt_key):
     unencrypt_key = {}
     for i in encrypt_key.keys():
         unencrypt_key[encrypt_key[i]] = i
