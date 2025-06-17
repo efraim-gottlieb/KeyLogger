@@ -1,5 +1,8 @@
 """
+
 encrypt and unencrypt text
+this file is only an example of a method to encrypt text
+
 """
 def encrypt_text(text,encrypt_key):
     encrypt_text =  ''
@@ -15,6 +18,7 @@ def encrypt_text(text,encrypt_key):
     #print(100,'% completed')
     #print('Yor text is now encoded!')
     return encrypt_text
+
 
 
 def unencrypt_text(text,encrypt_key):
@@ -37,3 +41,5 @@ def unencrypt_text(text,encrypt_key):
 
 
 
+if __name__ == '__main__':
+    pass
