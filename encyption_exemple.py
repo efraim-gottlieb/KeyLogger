@@ -1,4 +1,8 @@
 from encryption import *
+"""
+this is an example of using the encryption function
+
+"""
 
 ###     the dictionary of the encryption     ###
 my_key = {'e' : '@','f':'!','r':'+','a':'^','i':'`','m':'%'}
