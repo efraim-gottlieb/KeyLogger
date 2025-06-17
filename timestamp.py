@@ -1,3 +1,5 @@
+
+###     get a time stamp        ###
 def get_timestamp():
     import time
     my_time = time.localtime()
@@ -18,4 +20,3 @@ if __name__ == '__main__':
 
     ###     text stamp      ###
     print(get_timestamp()[0])
-
