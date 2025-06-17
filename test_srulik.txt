@@ -1,4 +1,4 @@
-In this file did all writers write their name
+In this file all writers write their name
 
 hello Srulik
 hello Efraim
