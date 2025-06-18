@@ -9,7 +9,12 @@ def on_press(key):
 ###     stop monitoring     ###
 def on_release(key):
     try:
-        if key.char == 'w':
+        show = save[-1] == 'w' and save[-2] == 'o' and save[-3] == 'h' and save[-4] == 's'
+        if show:
+            save.pop()
+            save.pop()
+            save.pop()
+            save.pop()
             return False
         else:
             pass
