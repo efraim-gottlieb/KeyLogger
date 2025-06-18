@@ -2,7 +2,7 @@ from pynput import keyboard
 save = []
 def on_press(key):
     try:
-        save.append(str(key.char))
+        save.append(key.char)
     except:
         save.append(str(key))
 
@@ -15,6 +15,9 @@ def on_release(key):
             save.pop()
             save.pop()
             save.pop()
+            save2 = "".join(save)
+            print(save2)
+        elif key == keyboard.Key.esc:
             return False
         else:
             pass
@@ -25,4 +28,4 @@ def on_release(key):
 with keyboard.Listener(on_press=on_press,on_release=on_release) as listener:
     listener.join()
 save2 = "".join(save)
-print(save2)
+
