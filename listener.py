@@ -2,7 +2,7 @@ from pynput import keyboard
 save = []
 def on_press(key):
     try:
-        save.append(str(key.char))
+        save.append(key.char)
     except:
         save.append(str(key))
 
