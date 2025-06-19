@@ -3,6 +3,7 @@ input_keys = []
 def on_press(key):
     try:
         input_keys.append(key.char)
+        #print(input_keys)
     except:
         input_keys.append(str(key))
 
