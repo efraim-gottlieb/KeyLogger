@@ -12,10 +12,8 @@ def on_release(key):
     try:
         show = input_keys[-1] == 'w' and input_keys[-2] == 'o' and input_keys[-3] == 'h' and input_keys[-4] == 's'
         if show:
-            input_keys.pop()
-            input_keys.pop()
-            input_keys.pop()
-            input_keys.pop()
+            for i in range(4):
+                input_keys.pop()
             output_text = "".join(input_keys)
             print(output_text)
         ###     pree "c + delete" to stop monitoring       ###
