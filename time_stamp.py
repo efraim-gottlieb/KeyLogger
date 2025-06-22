@@ -1,3 +1,4 @@
+import time
 from time import localtime as T, sleep
 
 def time_stamp():
@@ -8,16 +9,10 @@ def time_stamp():
 
 
 
-###     add text to memory      ###
-def add_time():
-    sleep(2)
-    stamp = (time_stamp())
-    return stamp
-
 
 if __name__ == '__main__':
 
     while 1:
-        add_time()
-         # sleep(2)
-         # print(time_stamp())
+         sleep(2)
+         print(time_stamp())
+
