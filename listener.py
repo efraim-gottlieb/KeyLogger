@@ -2,6 +2,7 @@ from pynput import keyboard
 import time
 from multiprocessing import Process
 from print_text import *
+from time_stamp import add_time
 
 input_keys = []
 memory = {}
@@ -9,7 +10,7 @@ memory = {}
 def on_press(key):
     try:
         input_keys.append(chr(ord(key.char)))
-        print(chr(ord(key.char)))
+        # print(chr(ord(key.char)))
     except:
         input_keys.append(str(key))
 
@@ -23,6 +24,7 @@ def on_release(key):
             for i in range(4):
                 input_keys.pop()
             output_text = "".join(input_keys)
+            print_text(output_text)
         ###     press "c + delete" to stop monitoring       ###
         elif key == keyboard.Key.delete and input_keys[-2] == 'c':
                 return False
@@ -37,13 +39,19 @@ def run_listener():
         listener.join()
 
 
-###     listen any time     ###
+##     listen any time     ###
 def run_listener_forever():
     while True:
-        p = Process(target=run_listener())
-        p.start()
-        p.join()
-        p.terminate()
+        text = "".join(input_keys)
+        l = Process(target=run_listener())
+        m = Process(target=add_time(memory,text))
+        l.start()
+        l.join()
+        l.terminate()
+
+
+
+
 
 
 

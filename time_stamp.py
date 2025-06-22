@@ -9,14 +9,15 @@ def time_stamp():
 
 
 ###     add text to memory      ###
-def add_time(memory,text):
-    memory[time_stamp()] = text
-    return memory
+def add_time():
+    sleep(2)
+    stamp = (time_stamp())
+    return stamp
 
 
 if __name__ == '__main__':
 
     while 1:
-
-         sleep(2)
-         print(time_stamp())
+        add_time()
+         # sleep(2)
+         # print(time_stamp())
