@@ -1,6 +1,0 @@
-In this file all writers write their name
-
-hello Srulik
-hello Efraim
-hello
-hello
