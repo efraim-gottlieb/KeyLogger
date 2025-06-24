@@ -1,12 +1,15 @@
 from pynput import keyboard
 import threading
 from time_stamp import *
-from print_text import *
+from msgbox import *
+from multiprocessing import Process
 
 input_keys = []
 all_keys = []
 memory = {}
 
+
+###     on press akey       ###
 def on_press(key):
     try:
         input_keys.append(key.char)
@@ -18,6 +21,7 @@ def on_press(key):
             input_keys.append('\n')
         else:
             pass
+
 ###     stop monitoring or show memory     ###
 def on_release(key):
     try:
@@ -30,10 +34,10 @@ def on_release(key):
             print(memory)
             print_memory()
         ###     press "c + k" to stop monitoring       ###
-        elif stop:
+        if stop:
             for i in range(4):
                 input_keys.pop()
-            print_text('monitoring is stoped !')
+            msgbox('Monitoring is stoped !')
             return False
         else:
             pass
@@ -48,7 +52,7 @@ def save_to_memory():
         memory[time_stamp()] = text
         input_keys = []
     ### timer   ###
-    threading.Timer(5, save_to_memory).start()
+    threading.Timer(300, save_to_memory).start()
 
 
 ###     print memory        ###
@@ -56,13 +60,13 @@ def print_memory():
     try:
         if memory:
             text = 'memory' + '\n' * 3
-            for i in memory:
-                text += i
-            print_text(str(text))
+            for i in memory.values():
+                text += i + '\n'
+            msgbox(str(text))
         else:
-            print_text('no text!')
+            msgbox('The memory is empty !')
     except:
-        print_text('Error')
+        msgbox('Error')
 
 
 ###     keyboard listener      ###
@@ -71,7 +75,13 @@ def my_listener():
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
+def run_listener_forever():
+    while True:
+        p = Process(target=my_listener)
+        p.start()
+        p.join()
+        p.terminate()
 
-### run KeyLogger       ###
 if __name__ == '__main__':
-    my_listener()
+###     run KeyLogger       ###
+    run_listener_forever()
