@@ -1,3 +1,3 @@
 import ctypes
-def msgbox(text):
-    ctypes.windll.user32.MessageBoxW(0, text, "KeyLogger", 1)
+def msgbox(title,text):
+    ctypes.windll.user32.MessageBoxW(0, text, title, 1)

@@ -6,7 +6,7 @@ from listener import on_release
 
 input_keys = []
 
-def listener_func():
+def run_listener():
     def on_press(key):
         global input_keys
         try:
@@ -20,12 +20,11 @@ def listener_func():
 
 def run_listener_forever():
     while True:
-        p = Process(target=listener_func)
+        p = Process(target=run_listener)
         p.start()
-        p.join()  # מחכה לסיום ההאזנה הנוכחית
-        p.terminate()  # לוודא שהוא מת
+        p.join()
+        p.terminate()
 
 
-# התחלת האזנה בלולאה
 if __name__ == "__main__":
     run_listener_forever()

