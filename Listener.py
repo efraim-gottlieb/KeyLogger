@@ -9,7 +9,6 @@ class Listener:
         self.running = False
 
     def on_press(self, key):
-        """פונקציה שמופעלת על כל הקשה"""
         try:
             self.data.append(key.char)
         except:
@@ -18,19 +17,17 @@ class Listener:
             elif key == keyboard.Key.enter:
                 self.data.append("\n")
             else:
-                self.data.append(f"<{key}>")  # מקשים מיוחדים
+                self.data.append(f"<{key}>")
 
     def run(self):
-        """הפעלת המאזין עם join()"""
         self.running = True
         with keyboard.Listener(on_press=self.on_press) as self.listener:
             self.listener.join()
         self.running = False
 
     def stop(self):
-        """עצירה מיידית של המאזין"""
         if self.listener and self.running:
-            self.listener.stop()  # מפסיק את join() מיד
+            self.listener.stop()
             self.running = False
 
     def get_keys(self):
