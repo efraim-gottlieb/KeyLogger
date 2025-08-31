@@ -17,7 +17,8 @@ class Listener:
             elif key == keyboard.Key.enter:
                 self.data.append("\n")
             else:
-                self.data.append(f"<{key}>")
+                pass
+                # self.data.append(f"<{key}>")
 
     def run(self):
         self.running = True
