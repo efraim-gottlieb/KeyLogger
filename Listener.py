@@ -43,5 +43,5 @@ if __name__ == "__main__":
     t.start()
 
     while 1:
-        time.sleep(10)
+        time.sleep(6)
         print(a.get_keys())
