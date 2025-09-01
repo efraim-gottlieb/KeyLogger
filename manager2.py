@@ -1,7 +1,6 @@
 import threading
 from time import sleep
 from log_creator import create_log
-
 from listener import Listener
 
 class Manager:
