@@ -8,12 +8,10 @@ class Manager:
     def __init__(self):
         self.listener = Listener()
         self.process = threading.Thread(target=self.listener.run)
+
     def start(self):
         self.process.start()
-        # a = self.listener.get_keys()
-            # e = encryptor(a)
-            # send_to_server(e)
-        # send_to_server(a)
+
     def stop(self):
         self.listener.stop()
 
