@@ -41,9 +41,7 @@ if __name__ == "__main__":
     a = Listener()
     t = threading.Thread(target=a.run)
     t.start()
-    num = 3
-    while num>0:
-        time.sleep(5)
+
+    while 1:
+        time.sleep(10)
         print(a.get_keys())
-        num -= 1
-    a.stop()
