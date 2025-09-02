@@ -1,5 +1,4 @@
 from pynput import keyboard
-import threading
 import time
 from window import get_active_window_title
 

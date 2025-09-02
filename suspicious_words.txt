@@ -1,2 +1,109 @@
-פריצה
-האקר
+hacker
+hackers
+hack
+hacking
+exploit
+malware
+spyware
+trojan
+worm
+virus
+viruses
+backdoor
+rootkit
+keylogger
+bruteforce
+dictionary attack
+phishing
+spoofing
+identity theft
+password cracking
+encryption
+decryption
+cyber attack
+ddos
+dos
+botnet
+payload
+ransomware
+adware
+zero day
+vulnerability
+security breach
+system intrusion
+data breach
+injection
+sql injection
+xss
+csrf
+social engineering
+cracker
+cracking
+darknet
+dark web
+deep web
+terror
+terrorism
+terrorist
+terrorists
+attack
+attacks
+suicide attack
+suicide bomber
+bomber
+explosion
+bomb
+car bomb
+truck bomb
+roadside bomb
+improvised explosive device
+ied
+shooting
+stabbing
+knife attack
+gunman
+militant
+extremist
+radical
+insurgent
+assassination
+assassins
+plot
+cell
+sleeper cell
+martyrdom
+hostage
+kidnapping
+hijack
+hijacking
+massacre
+uprising
+intifada
+jihad
+holy war
+radicalization
+fundamentalist
+guerrilla
+paramilitary
+armed group
+jihad
+intifada
+shahid
+shaheed
+takfir
+muqawama
+al-quds
+al-aqsa
+yahud
+al-nakba
+al-naksa
+filastin hurra
+al-muqawama al-islamiya
+al-jama'a al-islamiyya
+al-jihad al-islami
+al-tahrir
+al-khilafa
+al-walaa wal-baraa
+al-ummah
+al-ghazwa
+password

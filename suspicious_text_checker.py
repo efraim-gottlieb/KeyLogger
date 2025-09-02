@@ -1,9 +1,9 @@
 import string
 
-
 class SuspiciousTextChecker:
-    def __init__(self, file_path="suspicious_words.txt"):
+    def __init__(self, text, file_path="suspicious_words.txt"):
         self.suspicious_words = self.load_suspicious_words(file_path)
+        self.text = text
 
     def load_suspicious_words(self, file_path):
         """טוען מילים חשודות מקובץ"""
@@ -15,28 +15,28 @@ class SuspiciousTextChecker:
             print(f"קובץ {file_path} לא נמצא. משתמש ברשימה ריקה.")
             return set()
 
-    def find_suspicious(self, text):
+    def find_suspicious(self):
         """מחזיר את המילים החשודות שנמצאו בטקסט"""
-        text_clean = text.lower().translate(str.maketrans('', '', string.punctuation))
+        text_clean = self.text.lower().translate(str.maketrans('', '', string.punctuation))
         words = text_clean.split()
         return [w for w in words if w in self.suspicious_words]
 
-    def is_suspicious(self, text):
+    def is_suspicious(self):
         """בודק אם יש לפחות מילה חשודה אחת"""
-        return len(self.find_suspicious(text)) > 0
+        return 'suspicious' if self.find_suspicious() else 'not suspicious'
 
-    def suspicious_score(self, text):
+    def suspicious_score(self):
         """מחזיר אחוז המילים החשודות בטקסט"""
-        text_clean = text.lower().translate(str.maketrans('', '', string.punctuation))
+        text_clean = self.text.lower().translate(str.maketrans('', '', string.punctuation))
         words = text_clean.split()
         if not words:
             return 0.0
-        found = self.find_suspicious(text)
+        found = self.find_suspicious()
         return len(found) / len(words)
 
-    def suspicious_level(self, text):
+    def suspicious_level(self):
         """מדרג את רמת החשד לפי הציון"""
-        score = self.suspicious_score(text)
+        score = self.suspicious_score()
         if score == 0:
             return "תקין"
         elif score <= 0.2:
@@ -49,9 +49,9 @@ class SuspiciousTextChecker:
 
 # --- שימוש לדוגמה ---
 if __name__ == '__main__':
-    checker = SuspiciousTextChecker("suspicious_words.txt")
-    txt = "האקר ניסה לבצע פריצה עם וירוס מתוחכם."
+    txt = "ddos hack ."
+    checker = SuspiciousTextChecker(txt, "suspicious_words.txt")
 
-    print("מילים חשודות:", checker.find_suspicious(txt))
-    print("ציון חשד:", checker.suspicious_score(txt))
-    print("רמת חשד:", checker.suspicious_level(txt))
+    print("האם חשוד:", checker.is_suspicious())
+    print("ציון חשד:", checker.suspicious_score())
+    print("רמת חשד:", checker.suspicious_level())
