@@ -1,6 +1,7 @@
 from suspicious_text_checker import SuspiciousTextChecker
 from time_stamp import time_stamp
 from pc_info import get_system_info
+from encrypt import Encryption
 
 class Package:
     def __init__(self, data):
@@ -22,6 +23,15 @@ class Package:
             "suspicious words" : self.suspicious_words,
             "data" : self.data
         }
+    def encrypt(self):
+        if self.data:
+            data = Package(self.data)
+            package_data = data.export_package()
+            encryptor = Encryption()
+            encryptor.encrypt_text(str(package_data))
+            encrypted_packege = str(encryptor.encrypted)
+            return encrypted_packege
+
 if __name__ == '__main__':
 
     d = {'fr':'hack', 'moi':'hack'}
