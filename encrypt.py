@@ -18,42 +18,48 @@ class Encryption:
         self.xor_encrypt(text)
         self.decrypted = self.t_encrypted
 
-    def encrypt_file(self,file):
+    def encrypt_file(self,file: str):
         self.file=file
-        with open(self.file,'r') as f:
+        with open(self.file,'r', encoding = 'UTF-8') as f:
             data=f.read()
         self.xor_encrypt(data)
         encrypt_data=self.t_encrypted
-        with open('encrypt_file.txt', 'w') as f:
+        with open('encrypt_file.txt', 'w',encoding = 'UTF-8') as f:
             f.write(encrypt_data)
 
     def decrypt_file(self, file):
         self.file = file
-        with open(self.file, 'r') as f:
+        with open(self.file, 'r',encoding = 'UTF-8') as f:
             data = f.read()
         self.xor_encrypt(data)
         decrypt_data = self.t_encrypted
-        with open('decrypt_file.txt', 'w') as f:
+        with open('decrypt_file.txt', 'w',encoding = 'UTF-8') as f:
             f.write(decrypt_data)
 
 
 
 if __name__==("__main__"):
     c=Encryption()
-    c.encrypt_text('hii  ')
+    c.encrypt_text('my name is srulik shvadron i am 26 age  ')
     b=c.encrypted
+    print(b)
     c.decrypt_text(b)
     r=Encryption('RAND')
-    r.encrypt_text('my name is srulik shvadron i am 26 age')
+    r.encrypt_text(b)
     b=r.encrypted
+    print(b)
+    c.decrypt_text(b)
+    b=c.decrypted
+    print(b)
     r.decrypt_text(b)
+    print(r.decrypted)
     s = Encryption('עי ')
     s.encrypt_text('my name is srulik shvadron i am 26 age')
     b = s.encrypted
     s.decrypt_text(b)
     f=Encryption()
-    f.encrypt_file('test.txt')
-    f.decrypt_file('encrypt_file.txt')
+    # f.encrypt_file('test.txt')
+    # f.decrypt_file('encrypt_file.txt')
 
 
     print(f'c: {c.encrypted}{len(c.encrypted)}\n{c.decrypted}\n'
