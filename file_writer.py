@@ -12,10 +12,9 @@ class FileWriter:
         # כתיבת ההקשות וחתימת הזמן לתוך הקובץ
         with open(self.file_name, 'a', encoding="utf-8") as f:
             f.write(f'{timestamp}  - {list_key} \n')
+
+
 if __name__ == '__main__':
-
-
-
     aa = FileWriter()
     print(aa.file_name)
     print(aa.send_data("חמלחנהון[נעעעי"))
