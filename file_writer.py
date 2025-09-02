@@ -7,7 +7,7 @@ class FileWriter:
         self.file_name = file_name
 
     def send_data(self,list_key):
-        # הוספת חתימת זמן
+        # !!הוספת חתימת זמן
         timestamp = datetime.now(). strftime("%Y-%m-%d  %H:%M:%S")
         # כתיבת ההקשות וחתימת הזמן לתוך הקובץ
         with open(self.file_name, 'a', encoding="utf-8") as f:
