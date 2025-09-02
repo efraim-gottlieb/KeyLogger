@@ -1,7 +1,7 @@
 from log_creator import create_log
 
 def encryptor(data):
-    return str((str(data[::-1])))
+    return str((data[::-1]))
 
 def send_to_server(data):
     if data:
