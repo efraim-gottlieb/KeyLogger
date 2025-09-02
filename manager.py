@@ -20,7 +20,7 @@ class Manager:
             if temp_data:
                 data = Package(temp_data)
                 pack_name = f'{time_stamp2()}.txt'
-                log(pack_name, str(data.export_package()))
+                log(pack_name, str(data.encrypt()))
     def stop(self):
         self.listener.stop()
         self.run = False
