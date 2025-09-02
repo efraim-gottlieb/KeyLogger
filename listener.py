@@ -38,6 +38,7 @@ class Listener:
         self.data.clear()
         return text
 
+
 if __name__ == "__main__":
     a = Listener()
     a.run()
