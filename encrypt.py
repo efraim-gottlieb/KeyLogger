@@ -16,6 +16,8 @@ class Encrypt:
     def decrypt_text(self, text):
         self.xor_encrypt(text)
         self.decrypted = self.t_encrypted
+
+
 if __name__==("__main__"):
     c=Encrypt()
     c.encrypt_text('my name is srulik shvadron i am 26 age')
