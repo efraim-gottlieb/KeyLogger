@@ -7,4 +7,5 @@ class NetworkWriter:
 
 if __name__==('__main__'):
     c=NetworkWriter()
-    c.send_data('{tt:tt}','http://127.0.0.1:5000/tasks')
+    b=c.send_data('{tt:tt}','http://127.0.0.1:5000/post')
+    print(b)
