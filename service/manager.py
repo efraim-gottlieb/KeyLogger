@@ -5,7 +5,7 @@ from service.data_collector import Package
 from time_stamp import time_stamp2
 from file_test import log
 from networkWriter import NetworkWriter
-
+from backend.server import upload
 class Manager:
     def __init__(self, hours = 5):
         self.listener = Listener()
