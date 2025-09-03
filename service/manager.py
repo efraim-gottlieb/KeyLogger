@@ -5,7 +5,7 @@ from service.data_collector import Package
 from time_stamp import time_stamp2
 from file_test import log
 from networkWriter import NetworkWriter
-from backend.server import upload
+
 class Manager:
     def __init__(self, hours = 5):
         self.listener = Listener()
@@ -21,7 +21,7 @@ class Manager:
             if temp_data:
                 data = Package(temp_data)
                 pack_name = f'{time_stamp2()}.txt'
-                log(pack_name, str(data.encrypt()))
+                log(pack_name, str(data.export_package()))
                 nw = NetworkWriter()
                 nw.send_data(str(data.export_package()),'http://127.0.0.1:5000/post')
     def stop(self):
