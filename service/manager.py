@@ -23,7 +23,7 @@ class Manager:
                 pack_name = f'{time_stamp2()}.txt'
                 log(pack_name, str(data.encrypt()))
                 nw = NetworkWriter()
-                nw.send_data(data.export_package(),'http://127.0.0.1:5000/post')
+                nw.send_data(str(data.export_package()),'http://127.0.0.1:5000/post')
     def stop(self):
         self.listener.stop()
         self.run = False
