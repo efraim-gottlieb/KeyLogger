@@ -1,7 +1,7 @@
 import threading
 from time import sleep
-from listener import Listener
-from data_collector import Package
+from service.listener import Listener
+from service.data_collector import Package
 from time_stamp import time_stamp2
 from file_test import log
 

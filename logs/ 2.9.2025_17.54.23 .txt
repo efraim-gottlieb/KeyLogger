@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'time': '****** 2/9/2025 17:54:23 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'חיפוש': 'efraim test the encription'}}

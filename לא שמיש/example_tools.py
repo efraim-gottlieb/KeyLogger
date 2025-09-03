@@ -1,5 +1,5 @@
 from log_creator import create_log
-from encrypt import Encrypt
+from service.encrypt import Encrypt
 
 def encryptor(data):
     return str((data[::-1]))

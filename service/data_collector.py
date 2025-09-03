@@ -8,7 +8,7 @@ class Package:
         self.time_stamp = time_stamp()
         self.data = data
         # Check if Suspicious
-        data_info = SuspiciousTextChecker(text=str(self.data),file_path="suspicious_words.txt")
+        data_info = SuspiciousTextChecker(text=str(self.data), file_path="suspicious_words.txt")
         self.label = data_info.is_suspicious()
         self.suspicious_words = data_info.find_suspicious()
         self.pc_info = get_system_info()

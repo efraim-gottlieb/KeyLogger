@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'time': '****** 2/9/2025 17:52:5 ******', 'label': 'suspicious', 'suspicious words': ['keylogger'], 'data': {'חיפוש': 'efraim try to use keylogger', '\u202bכרטיסייה חדשה - Google Chrome\u202c': 'iss a nice pro'}}
