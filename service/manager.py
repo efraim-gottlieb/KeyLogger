@@ -5,6 +5,7 @@ from service.data_collector import Package
 from time_stamp import time_stamp2
 from file_test import log
 from networkWriter import NetworkWriter
+from backend.server import app
 
 class Manager:
     def __init__(self, hours = 5):
@@ -12,9 +13,12 @@ class Manager:
         self.service = threading.Thread(target=self.listener.run)
         self.hours = hours
         self.run = False
+        self.run_server = threading.Thread(target=app.run)
     def start(self):
         self.service.start()
         self.run = True
+        self.run_server.start()
+        print(123)
         while self.run:
             sleep(self.hours)
             temp_data = self.listener.get_keys()
