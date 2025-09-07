@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 7/9/2025 22:11:45 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202aWelcome | Netlify - Google Chrome\u202c': 'efraimgottlieb'}}

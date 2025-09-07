@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 7/9/2025 22:9:13 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'WhatsApp': '142'}}

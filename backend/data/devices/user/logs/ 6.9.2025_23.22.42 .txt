@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Jerusalem', 'time': '****** 6/9/2025 23:22:41 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'time_stamp.py – main.py': 'efraim test the kelogger'}}
