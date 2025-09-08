@@ -13,18 +13,17 @@ class Manager:
         self.service = threading.Thread(target=self.listener.run)
         self.hours = hours
         self.run = False
-        # הפעלת השרת בפלסק בתוך thread בלי reloader
         self.run_server = threading.Thread(
             target=app.run,
             kwargs={'host': '0.0.0.0', 'port': 5000, 'use_reloader': False},
-            daemon=True  # כך שהשרת לא יחסום יציאה מהתוכנית
+            daemon=True
         )
 
     def start(self):
         self.service.start()
         self.run = True
         self.run_server.start()
-        print("שרת ו־Listener הופעלו בהצלחה")
+        print('Listener and server is running !')
         while self.run:
             sleep(self.hours)
             temp_data = self.listener.get_keys()
