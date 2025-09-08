@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 7/9/2025 22:6:54 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'time_stamp.py – main.py': 'utffuo8iyvyvouvuv'}}
