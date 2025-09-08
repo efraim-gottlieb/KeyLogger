@@ -53,7 +53,7 @@
                             <div class="stat-value">0:00</div>
                         </div>
                     </div>
-                    <button class="computer-button" id="${computer}">צפה בפרטים</button>
+                    <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
                 `;
                 
                 list.appendChild(listItem);

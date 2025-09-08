@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 8/9/2025 20:54:44 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202aKodCode KeyLogger - Google Chrome\u202c': 'גבםגק2025\n'}}
