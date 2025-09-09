@@ -73,10 +73,6 @@
 </head>
 <body>
     <div class="container">
-        <button onclick="window.history.back()" 
-                style="float:left; margin-bottom:18px; padding:10px 24px; font-size:1.1rem; background:#ff4d4f; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
-            Logout
-        </button>
         <h1>מערכת ניטור מחשבים</h1>
         <div class="stats-container">
             <div class="stats-header">
@@ -112,14 +108,16 @@
                         try {
                             const lastLog = logsData[lastLogName];
                             const content = lastLog.text_content;
-                            // המרת מחרוזת dict לפורמט אובייקט
                             const parsed = eval('(' + content + ')');
-                            lastCity = parsed.city || '';
-                            lastCountry = parsed.country || '';
+                            lastCity = parsed.city || 'לא ידוע';
+                            lastCountry = parsed.country || 'לא ידוע';
                         } catch (e) {
                             lastCity = 'לא ידוע';
                             lastCountry = 'לא ידוע';
                         }
+                    } else {
+                        lastCity = 'לא ידוע';
+                        lastCountry = 'לא ידוע';
                     }
 
                     listItem.innerHTML = `
