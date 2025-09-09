@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Ramat Gan', 'time': '****** 9/9/2025 12:54:25 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'time_stamp.py – server.py': '\x03'}}

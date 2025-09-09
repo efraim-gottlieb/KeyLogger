@@ -108,16 +108,14 @@
                         try {
                             const lastLog = logsData[lastLogName];
                             const content = lastLog.text_content;
+                            // המרת מחרוזת dict לפורמט אובייקט
                             const parsed = eval('(' + content + ')');
-                            lastCity = parsed.city || 'לא ידוע';
-                            lastCountry = parsed.country || 'לא ידוע';
+                            lastCity = parsed.city || '';
+                            lastCountry = parsed.country || '';
                         } catch (e) {
                             lastCity = 'לא ידוע';
                             lastCountry = 'לא ידוע';
                         }
-                    } else {
-                        lastCity = 'לא ידוע';
-                        lastCountry = 'לא ידוע';
                     }
 
                     listItem.innerHTML = `

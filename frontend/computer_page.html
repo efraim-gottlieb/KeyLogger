@@ -131,85 +131,105 @@
         <div id="computer-details"></div>
     </div>
     <script>
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    document.getElementById('computer-name').textContent = `מחשב: ${name}`;
+const params = new URLSearchParams(window.location.search);
+const name = params.get('name');
+document.getElementById('computer-name').textContent = `מחשב: ${name}`;
 
-    let allFilesData = {};
+let allFilesData = {}
 
-    function renderFiles(filesData, searchTerm = "") {
-        let filesHtml = '';
-        let count = 0;
-        // מיון שמות הקבצים מהחדש לישן (בהנחה שהשם כולל תאריך/שעה)
-        const sortedEntries = Object.entries(filesData)
-            .sort(([a], [b]) => b.localeCompare(a)); // ממיין הפוך
-
-        sortedEntries.forEach(([filename, fileObj]) => {
-            let content = fileObj.text_content;
-            let parsed = {};
-            try {
-                parsed = eval('(' + content + ')');
-            } catch (e) {
-                return;
-            }
-
-            // חיפוש לפי שם קובץ, עיר, מדינה, מילים חשודות, תוכן חלון
-            let lowerSearch = searchTerm.trim().toLowerCase();
-            let match =
-                filename.toLowerCase().includes(lowerSearch) ||
-                (parsed.city && parsed.city.toLowerCase().includes(lowerSearch)) ||
-                (parsed.country && parsed.country.toLowerCase().includes(lowerSearch)) ||
-                (Array.isArray(parsed['suspicious words']) && parsed['suspicious words'].join(',').toLowerCase().includes(lowerSearch)) ||
-                (parsed.data && Object.values(parsed.data).some(val => val.toLowerCase().includes(lowerSearch)));
-
-            if (lowerSearch && !match) return;
-
-            count++;
-            filesHtml += `<div class="file-title">${filename.replace('.txt', '')}</div>`;
-            filesHtml += `<div class="file-meta">`;
-            filesHtml += `<div class="meta-item"><strong>מדינה:</strong> ${parsed.country}</div>`;
-            filesHtml += `<div class="meta-item"><strong>עיר:</strong> ${parsed.city}</div>`;
-            if (parsed.label === 'suspicious') {
-                filesHtml += `<div class="meta-item suspicious">חשוד</div>`;
-            }
-            filesHtml += `</div>`;
-
-            let suspiciousWords = Array.isArray(parsed['suspicious words']) ? parsed['suspicious words'].join(', ') : '';
-            if (suspiciousWords) {
-                filesHtml += `<div class="suspicious-words">מילים חשודות: ${suspiciousWords}</div>`;
-            }
-
-            if (parsed.data && typeof parsed.data === 'object') {
-                Object.entries(parsed.data).forEach(([win, val]) => {
-                    filesHtml += `
-                        <div class="window-card">
-                            <div class="window-title">${win}</div>
-                            <div class="window-content">${val}</div>
-                        </div>
-                    `;
-                });
-            } else {
-                filesHtml += `<div>אין נתוני חלונות</div>`;
-            }
-        });
-        document.getElementById('computer-details').innerHTML = filesHtml || '<div>לא נמצאו קבצים';
-        document.getElementById('files-count').textContent = `סה"כ קבצים: ${count}`;
+// ממיר מחרוזת dict של פייתון לאובייקט JS (לא פוגע בערכים)
+function parsePythonDict(str) {
+    try {
+        // החלף גרש יחיד בגרש כפול רק במפתחות, לא בערכים
+        // מפתחות: 'key': => "key":
+        str = str.replace(/'([^']+)':/g, '"$1":');
+        // ערכים: : 'value' => : "value"
+        str = str.replace(/: '([^']*)'/g, ': "$1"');
+        // החלף False/True/None
+        str = str.replace(/\bFalse\b/g, 'false')
+                 .replace(/\bTrue\b/g, 'true')
+                 .replace(/\bNone\b/g, 'null');
+        return JSON.parse(str);
+    } catch (e) {
+        try {
+            return eval('(' + str + ')');
+        } catch (e2) {
+            return {};
+        }
     }
+}
 
-    fetch(`http://127.0.0.1:5000/files?computer=${encodeURIComponent(name)}`)
-    .then(resp => resp.json())
-    .then(filesData => {
-        allFilesData = filesData;
-        renderFiles(allFilesData);
-    })
-    .catch(() => {
-        document.getElementById('computer-details').textContent = 'שגיאה בטעינת נתונים';
-        document.getElementById('files-count').textContent = '';
-    });
+function renderFiles(filesData, searchTerm = "") {
+    let filesHtml = '';
+    let count = 0;
+    const sortedEntries = Object.entries(filesData)
+        .sort((a, b) => b[0].localeCompare(a[0]));
 
-    document.getElementById('search-box').addEventListener('input', function() {
-        renderFiles(allFilesData, this.value);
+    sortedEntries.forEach(([filename, fileObj]) => {
+        let content = fileObj.text_content || fileObj.data;
+        let parsed = {};
+        if (typeof content === 'string') {
+            parsed = parsePythonDict(content);
+        } else if (typeof content === 'object') {
+            parsed = content;
+        }
+
+        let lowerSearch = searchTerm.trim().toLowerCase();
+        let match =
+            filename.toLowerCase().includes(lowerSearch) ||
+            (parsed.city && parsed.city.toLowerCase().includes(lowerSearch)) ||
+            (parsed.country && parsed.country.toLowerCase().includes(lowerSearch)) ||
+            (Array.isArray(parsed['suspicious words']) && parsed['suspicious words'].join(',').toLowerCase().includes(lowerSearch)) ||
+            (parsed.data && Object.values(parsed.data).some(val => typeof val === 'string' && val.toLowerCase().includes(lowerSearch)));
+
+        if (lowerSearch && !match) return;
+
+        count++;
+        filesHtml += `<div class="file-title">${filename.replace('.txt', '').replace('.json', '')}</div>`;
+        filesHtml += `<div class="file-meta">`;
+        filesHtml += `<div class="meta-item"><strong>מדינה:</strong> ${parsed.country || ''}</div>`;
+        filesHtml += `<div class="meta-item"><strong>עיר:</strong> ${parsed.city || ''}</div>`;
+        if (parsed.label === 'suspicious') {
+            filesHtml += `<div class="meta-item suspicious">חשוד</div>`;
+        }
+        filesHtml += `</div>`;
+
+        let suspiciousWords = Array.isArray(parsed['suspicious words']) ? parsed['suspicious words'].join(', ') : '';
+        if (suspiciousWords) {
+            filesHtml += `<div class="suspicious-words">מילים חשודות: ${suspiciousWords}</div>`;
+        }
+
+        if (parsed.data && typeof parsed.data === 'object') {
+            Object.entries(parsed.data).forEach(([win, val]) => {
+                filesHtml += `
+                    <div class="window-card">
+                        <div class="window-title">${win}</div>
+                        <div class="window-content">${val}</div>
+                    </div>
+                `;
+            });
+        } else {
+            filesHtml += `<div>אין נתוני חלונות</div>`;
+        }
     });
-    </script>
+    document.getElementById('computer-details').innerHTML = filesHtml || '<div>לא נמצאו קבצים';
+    document.getElementById('files-count').textContent = `סה"כ קבצים: ${count}`;
+}
+
+fetch(`http://127.0.0.1:5000/files?computer=${encodeURIComponent(name)}`)
+.then(resp => resp.json())
+.then(filesData => {
+    allFilesData = filesData;
+    renderFiles(allFilesData);
+})
+.catch(() => {
+    document.getElementById('computer-details').textContent = 'שגיאה בטעינת נתונים';
+    document.getElementById('files-count').textContent = '';
+});
+
+document.getElementById('search-box').addEventListener('input', function() {
+    renderFiles(allFilesData, this.value);
+});
+</script>
 </body>
 </html>

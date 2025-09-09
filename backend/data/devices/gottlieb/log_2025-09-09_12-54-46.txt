@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Ramat Gan', 'time': '****** 9/9/2025 12:54:45 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202bכרטיסייה חדשה - Google Chrome\u202c': '12', '\u202a127.0.0.1:5000/files?computer=gottlieb - Google Chrome\u202c': '\x01\x03', 'computer_page.html - KeyLogger - Visual Studio Code': ''}}
