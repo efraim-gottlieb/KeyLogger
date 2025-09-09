@@ -1,234 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
 <head>
     <meta charset="UTF-8">
     <title>פרטי מחשב</title>
     <link rel="stylesheet" href="./css/computers_list.css">
     <style>
-    .computer-tab {
-        background: #112240;
-        border: 2px solid #64ffda;
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 32px;
-        box-shadow: 0 4px 20px rgba(100,255,218,0.12);
-        text-align: right;
+    body { background:#071028; color:#e2e8f0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding:18px; }
+    .container { max-width:1100px; margin:0 auto; }
+
+    /* כותרת עליונה sticky */
+    .header-frame {
+        position: sticky; top: 18px;
+        background: rgba(7,16,40,0.98);
+        border: 1px solid #233554;
+        border-radius: 12px;
+        padding: 12px 16px;
+        z-index: 200;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+        display: flex; gap:12px; align-items: center; margin-bottom: 14px;
     }
-    .computer-tab-title {
-        font-size: 2.3rem;
-        color: #64ffda;
-        font-weight: bold;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-    }
-    .files-count {
-        font-size: 1.3rem;
-        color: #e2e8f0;
-        margin-bottom: 6px;
-        font-weight: 500;
-    }
+    .top-row { display:flex; gap:12px; align-items:center; width:100%; }
+    .back-btn { padding:8px 14px; background:#2b3b55; color:#e2e8f0; border:1px solid #233554; border-radius:8px; cursor:pointer; flex: 0 0 auto; }
+    .computer-tab-title { font-size:2.1rem; color:#64ffda; font-weight:900; text-align:right; flex:1 1 auto; letter-spacing:0.6px; }
+    .files-count { color:#9adbd1; margin-left:10px; font-weight:600; white-space:nowrap; }
+
+    /* תיבת חיפוש - עדכון: מסגרת וטקסט בצבע הירוק של כמות הלוגים (#9adbd1) */
     .search-box {
-        width: 100%;
-        max-width: 400px;
-        padding: 10px 16px;
-        font-size: 1.15rem;
-        border-radius: 8px;
-        border: 2px solid #64ffda;
-        margin-bottom: 24px;
-        background: #0a192f;
-        color: #e2e8f0;
-        outline: none;
-        direction: rtl;
+        padding:8px 10px;
+        border-radius:8px;
+        border:1px solid #9adbd1;         /* צבע המסגרת ירוק */
+        background: rgba(7,22,36,0.85);   /* רקע מעט כהה לשמירת ניגודיות */
+        color:#9adbd1;                    /* צבע הטקסט בתוך התיבה ירוק */
+        min-width:220px;
+        outline:none;
+        direction:rtl;
+        flex:0 0 320px;
+        box-shadow: inset 0 0 6px rgba(154,219,209,0.03);
+        transition: box-shadow 0.12s, border-color 0.12s;
+    }
+    .search-box::placeholder { color: rgba(154,219,209,0.6); } /* placeholder בגוון ירוק שקוף */
+    .search-box:focus {
+        border-color: #64ffda;
+        box-shadow: 0 0 10px rgba(100,255,218,0.08);
     }
 
-    /* חדש: שעון בצד שמאל */
-    .tab-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-    }
-    .tab-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .clock {
-        font-size: 1.05rem;
-        color: #e2e8f0;
-        background: #0f2338;
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 1px solid #233554;
-        min-width: 120px;
-        text-align: left;
-        direction: ltr;
-    }
-    .file-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 12px;
-        color: #64ffda;
-        letter-spacing: 1px;
-        text-align: right;
-    }
-    .file-meta {
-        margin-bottom: 18px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        background: #1d2d50;
-        border-radius: 10px;
-        padding: 16px;
-        color: #e2e8f0;
-        box-shadow: 0 2px 8px rgba(100,255,218,0.07);
-        border: 2px solid #233554;
-        font-size: 1.3rem;
-    }
-    .meta-item {
-        background: #112240;
-        border-radius: 8px;
-        padding: 10px 18px;
-        font-size: 1.22rem;
-        margin-bottom: 0;
-        border: 1.5px solid #233554;
-        display: flex;
-        align-items: center;
-        min-width: 120px;
-        justify-content: center;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-    }
-    .meta-item.suspicious {
-        color: #ff4d4f;
-        font-weight: bold;
-        font-size: 1.3rem;
-        border: 2px solid #ff4d4f;
-        background: #2a1a1a;
-    }
-        margin-top: 5px;
-        word-break: break-all;
-        text-align: right;
-        line-height: 1.7;
-    }
-    .suspicious-words {
-        color: #ff4d4f;
-        font-size: 1.18rem;
-        margin-bottom: 12px;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-    }
+    /* כרטיס קובץ */
+    .file-card { background:#0f1b30; border:1px solid #233554; border-radius:12px; padding:14px; margin-bottom:18px; box-shadow:0 6px 18px rgba(0,0,0,0.35); overflow: hidden; }
+
+    /* שורת כותרת הלוג: שם גדול מימין, פרטי מיקום/חשוד משמאל */
+    .file-title-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+    .file-title-main { font-size:1.9rem; color:#64ffda; font-weight:800; text-align:right; line-height:1.05; }
+    .file-title-meta { display:flex; align-items:center; gap:8px; font-size:0.95rem; color:#e2e8f0; direction:ltr; white-space:nowrap; }
+
+    .meta-badge { background:#233554; color:#e2e8f0; padding:6px 10px; border-radius:8px; border:1px solid rgba(100,255,218,0.06); font-weight:600; }
+    .suspicious-inline { background:#ff4d4f; color:#fff; border-color:#ff4d4f; box-shadow: 0 2px 8px rgba(255,77,79,0.12); }
+
+    .file-meta { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
+    .meta-item { background:#0b1626; border:1px solid #233554; padding:10px 14px; border-radius:8px; font-weight:600; min-width:120px; text-align:center; box-shadow: inset 0 -6px 12px rgba(0,0,0,0.15); }
+    .meta-item.suspicious { color:#ff4d4f; border-color:#ff4d4f; background:#2a1a1a; font-weight:700; }
+
+    .suspicious-words { color:#ff4d4f; font-weight:700; margin-bottom:10px; }
+
+    .window-card { background:#071f36; border:1px solid #233554; border-radius:10px; padding:12px; margin-bottom:10px; }
+    .window-title { font-size:1rem; color:#64ffda; font-weight:700; margin-bottom:6px; text-align:right; }
+    .window-content { font-family: "Share Tech Mono", monospace; white-space:pre-wrap; color:#e6eef6; font-size:1rem; background:#072133; padding:10px; border-radius:8px; border:1px solid rgba(35,53,84,0.6); }
+
+    .no-files { color:#cbd5e1; padding:18px; text-align:center; }
+    .content-area { padding-top: 6px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="computer-tab">
-            <button onclick="window.history.back()" class="computer-button" style="float:left; margin-bottom:12px;">חזור</button>
-            <div class="computer-tab-title" id="computer-name"></div>
-            <div class="files-count" id="files-count"></div>
-            <input type="text" class="search-box" id="search-box" placeholder="חפש לפי שם קובץ או תוכן...">
+        <div class="header-frame" role="region" aria-label="כותרת מחשב">
+            <div class="top-row" style="width:100%;">
+                <button class="back-btn" onclick="window.history.back()">חזור</button>
+                <div class="computer-tab-title" id="computer-name">מחשב:</div>
+                <div class="files-count" id="files-count">סה"כ קבצים: 0</div>
+                <input id="search-box" class="search-box" placeholder="חפש לפי שם קובץ, עיר, מדינה או תוכן..." />
+            </div>
         </div>
-        <div id="computer-details"></div>
+
+        <div class="content-area">
+            <div id="computer-details"></div>
+        </div>
     </div>
-    <script>
+
+<script>
 const params = new URLSearchParams(window.location.search);
-const name = params.get('name');
+const name = params.get('name') || '';
 document.getElementById('computer-name').textContent = `מחשב: ${name}`;
 
 let allFilesData = {}
 
-// ממיר מחרוזת dict של פייתון לאובייקט JS (לא פוגע בערכים)
+/* parsePythonDict - תיקון זהיר להמרת המחרוזת dict של פייתון לאובייקט JS */
 function parsePythonDict(str) {
+    if (!str || typeof str !== 'string') return {};
     try {
-        // החלף גרש יחיד בגרש כפול רק במפתחות, לא בערכים
-        // מפתחות: 'key': => "key":
-        str = str.replace(/'([^']+)':/g, '"$1":');
-        // ערכים: : 'value' => : "value"
-        str = str.replace(/: '([^']*)'/g, ': "$1"');
-        // החלף False/True/None
-        str = str.replace(/\bFalse\b/g, 'false')
-                 .replace(/\bTrue\b/g, 'true')
-                 .replace(/\bNone\b/g, 'null');
-        return JSON.parse(str);
+        // החלפת True/False/None
+        let s = str.replace(/\bTrue\b/g,'true').replace(/\bFalse\b/g,'false').replace(/\bNone\b/g,'null');
+        // המרה של מפתחות עם single quotes ל-JSON: 'key': -> "key":
+        s = s.replace(/'([^']*?)'\s*:/g, function(_, k){ return JSON.stringify(k) + ':'; });
+        // המרה של ערכים ב-single quotes: : 'val' -> : "val"
+        s = s.replace(/:\s*'([^']*?)'/g, function(_, v){ return ': ' + JSON.stringify(v); });
+        return JSON.parse(s);
     } catch (e) {
         try {
-            return eval('(' + str + ')');
+            // fallback מאוד זהיר
+            return (new Function('return ' + str))();
         } catch (e2) {
             return {};
         }
     }
 }
 
-function renderFiles(filesData, searchTerm = "") {
+function escapeHtml(s){
+    if (s === null || s === undefined) return '';
+    return String(s)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+}
+
+function renderFiles(filesData, searchTerm = '') {
+    const container = document.getElementById('computer-details');
     let filesHtml = '';
     let count = 0;
-    const sortedEntries = Object.entries(filesData)
-        .sort((a, b) => b[0].localeCompare(a[0]));
+    const entries = Object.entries(filesData || {}).sort((a,b)=> b[0].localeCompare(a[0])); // newest first by filename
 
-    sortedEntries.forEach(([filename, fileObj]) => {
-        let content = fileObj.text_content || fileObj.data;
+    const q = (searchTerm||'').trim().toLowerCase();
+
+    entries.forEach(([filename, fileObj]) => {
+        let raw = fileObj.text_content !== undefined ? fileObj.text_content : fileObj.data;
         let parsed = {};
-        if (typeof content === 'string') {
-            parsed = parsePythonDict(content);
-        } else if (typeof content === 'object') {
-            parsed = content;
-        }
+        if (typeof raw === 'string') parsed = parsePythonDict(raw);
+        else if (typeof raw === 'object') parsed = raw || {};
 
-        let lowerSearch = searchTerm.trim().toLowerCase();
-        let match =
-            filename.toLowerCase().includes(lowerSearch) ||
-            (parsed.city && parsed.city.toLowerCase().includes(lowerSearch)) ||
-            (parsed.country && parsed.country.toLowerCase().includes(lowerSearch)) ||
-            (Array.isArray(parsed['suspicious words']) && parsed['suspicious words'].join(',').toLowerCase().includes(lowerSearch)) ||
-            (parsed.data && Object.values(parsed.data).some(val => typeof val === 'string' && val.toLowerCase().includes(lowerSearch)));
-
-        if (lowerSearch && !match) return;
+        // search
+        const matchesSearch = !q || (
+            filename.toLowerCase().includes(q) ||
+            (parsed.city && parsed.city.toLowerCase().includes(q)) ||
+            (parsed.country && parsed.country.toLowerCase().includes(q)) ||
+            (Array.isArray(parsed['suspicious words']) && parsed['suspicious words'].join(',').toLowerCase().includes(q)) ||
+            (parsed.data && Object.values(parsed.data).some(v => typeof v==='string' && v.toLowerCase().includes(q)))
+        );
+        if (!matchesSearch) return;
 
         count++;
-        filesHtml += `<div class="file-title">${filename.replace('.txt', '').replace('.json', '')}</div>`;
-        filesHtml += `<div class="file-meta">`;
-        filesHtml += `<div class="meta-item"><strong>מדינה:</strong> ${parsed.country || ''}</div>`;
-        filesHtml += `<div class="meta-item"><strong>עיר:</strong> ${parsed.city || ''}</div>`;
-        if (parsed.label === 'suspicious') {
-            filesHtml += `<div class="meta-item suspicious">חשוד</div>`;
-        }
-        filesHtml += `</div>`;
+        const city = parsed.city ? escapeHtml(parsed.city) : '';
+        const country = parsed.country ? escapeHtml(parsed.country) : '';
+        const loc = (city && country) ? `${city}, ${country}` : (city || country);
+        const suspiciousBadge = parsed.label === 'suspicious' ? `<span class="meta-badge suspicious-inline">חשוד</span>` : '';
 
-        let suspiciousWords = Array.isArray(parsed['suspicious words']) ? parsed['suspicious words'].join(', ') : '';
-        if (suspiciousWords) {
-            filesHtml += `<div class="suspicious-words">מילים חשודות: ${suspiciousWords}</div>`;
-        }
+        filesHtml += `<div class="file-card">`;
 
-        if (parsed.data && typeof parsed.data === 'object') {
+        // title row: big filename at right, location + suspicious at left
+        filesHtml += `
+            <div class="file-title-row">
+                <div class="file-title-main">${escapeHtml(filename.replace(/\.txt|\.json$/i,''))}</div>
+                <div class="file-title-meta">
+                    ${ loc ? `<span class="meta-badge">${loc}</span>` : '' }
+                    ${ suspiciousBadge }
+                </div>
+            </div>
+        `;
+
+        // (הסרתי הצגת זמן כאן לפי בקשתך)
+
+        const suspiciousWords = Array.isArray(parsed['suspicious words']) ? parsed['suspicious words'].join(', ') : '';
+        if (suspiciousWords) filesHtml += `<div class="suspicious-words">מילים חשודות: ${escapeHtml(suspiciousWords)}</div>`;
+
+        // show each window as a card
+        if (parsed.data && typeof parsed.data === 'object' && Object.keys(parsed.data).length) {
             Object.entries(parsed.data).forEach(([win, val]) => {
+                const content = (val === null || val === undefined) ? '' : String(val);
+                const normalized = content.replace(/\\n/g, '\n');
                 filesHtml += `
                     <div class="window-card">
-                        <div class="window-title">${win}</div>
-                        <div class="window-content">${val}</div>
+                        <div class="window-title">${escapeHtml(win)}</div>
+                        <div class="window-content">${escapeHtml(normalized)}</div>
                     </div>
                 `;
             });
         } else {
-            filesHtml += `<div>אין נתוני חלונות</div>`;
+            filesHtml += `<div class="window-card"><div class="window-content">אין נתוני חלונות</div></div>`;
         }
+
+        filesHtml += `</div>`; // file-card
     });
-    document.getElementById('computer-details').innerHTML = filesHtml || '<div>לא נמצאו קבצים';
+
+    if (!count) container.innerHTML = `<div class="no-files">לא נמצאו קבצים</div>`;
+    else container.innerHTML = filesHtml;
+
     document.getElementById('files-count').textContent = `סה"כ קבצים: ${count}`;
 }
 
+/* Fetch and init */
 fetch(`http://127.0.0.1:5000/files?computer=${encodeURIComponent(name)}`)
-.then(resp => resp.json())
-.then(filesData => {
-    allFilesData = filesData;
+.then(r => r.json())
+.then(data => {
+    allFilesData = data || {};
     renderFiles(allFilesData);
 })
-.catch(() => {
-    document.getElementById('computer-details').textContent = 'שגיאה בטעינת נתונים';
-    document.getElementById('files-count').textContent = '';
+.catch(err => {
+    document.getElementById('computer-details').innerHTML = '<div class="no-files">שגיאה בטעינת הנתונים</div>';
+    console.error(err);
 });
 
-document.getElementById('search-box').addEventListener('input', function() {
-    renderFiles(allFilesData, this.value);
+/* search */
+document.getElementById('search-box').addEventListener('input', (e)=>{
+    renderFiles(allFilesData, e.target.value);
 });
 </script>
 </body>
