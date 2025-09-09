@@ -40,6 +40,30 @@
         outline: none;
         direction: rtl;
     }
+
+    /* חדש: שעון בצד שמאל */
+    .tab-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .tab-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .clock {
+        font-size: 1.05rem;
+        color: #e2e8f0;
+        background: #0f2338;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #233554;
+        min-width: 120px;
+        text-align: left;
+        direction: ltr;
+    }
     .file-title {
         font-size: 2rem;
         font-weight: bold;
@@ -82,30 +106,6 @@
         border: 2px solid #ff4d4f;
         background: #2a1a1a;
     }
-    .window-card {
-        background: #112240;
-        border: 2px solid #233554;
-        border-radius: 14px;
-        padding: 22px;
-        margin-bottom: 22px;
-        box-shadow: 0 2px 8px rgba(100,255,218,0.07);
-    }
-    .window-title {
-        font-size: 1.35rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #64ffda;
-        letter-spacing: 0.5px;
-        text-align: right;
-    }
-    .window-content {
-        font-size: 1.7rem;
-        font-family: 'Share Tech Mono', monospace;
-        background: #1d2d50;
-        color: #e2e8f0;
-        padding: 14px;
-        border-radius: 10px;
-        margin-bottom: 10px;
         margin-top: 5px;
         word-break: break-all;
         text-align: right;

@@ -19,9 +19,8 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        .logout-btn:hover {
-            background: #d32f2f;
-        }
+        .logout-btn:hover { background: #d32f2f; }
+
         .computer-card {
             background: #112240;
             border: 2px solid #233554;
@@ -34,35 +33,32 @@
             align-items: flex-end;
             transition: box-shadow 0.2s;
         }
-        .computer-card:hover {
-            box-shadow: 0 8px 32px rgba(100,255,218,0.18);
-            border-color: #64ffda;
-        }
-        .computer-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 18px;
-        }
+        .computer-card:hover { box-shadow: 0 8px 32px rgba(100,255,218,0.18); border-color: #64ffda; }
+
+        .computer-header { display: flex; align-items: center; margin-bottom: 12px; width:100%; justify-content: space-between; }
+        .computer-left { display:flex; align-items:center; gap:12px; }
         .computer-icon {
             background: #64ffda;
             color: #112240;
             font-weight: bold;
-            font-size: 1.3rem;
+            font-size: 1.05rem;
             border-radius: 50%;
             width: 44px;
             height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 16px;
             box-shadow: 0 2px 8px rgba(100,255,218,0.12);
         }
-        .computer-name {
-            font-size: 1.7rem;
-            font-weight: bold;
-            color: #e2e8f0;
-            letter-spacing: 1px;
+        .computer-name { font-size: 1.3rem; font-weight: bold; color: #e2e8f0; letter-spacing: 1px; }
+
+        .status {
+            display:flex; align-items:center; gap:8px; font-size:1rem; color:#e2e8f0;
         }
+        .status-dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+        .active { background:#39d353; box-shadow: 0 0 6px rgba(57,211,83,0.25); }
+        .inactive { background:#707579; }
+
         .computer-button {
             margin-top: 18px;
             padding: 10px 28px;
@@ -74,10 +70,10 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
+            align-self:flex-start;
         }
-        .computer-button:hover {
-            background: #52e0c4;
-        }
+        .computer-button:hover { background: #52e0c4; }
+
         #computers-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -99,76 +95,158 @@
         </div>
         <ul id="computers-list"></ul>
     </div>
+
     <script>
-        fetch('http://localhost:5000/computers')
-        .then(response => response.json())
-        .then(data => {
-            const computers = Array.isArray(data) ? data : data.computers;
-            const list = document.getElementById('computers-list');
-            document.getElementById('total-count').textContent = computers.length;
-            document.getElementById('last-update').textContent = new Date().toLocaleString();
+    // עוזרים:
+    function parseLogFilenameToDate(name) {
+        // תומך ב: log_YYYY-MM-DD_HH-MM-SS.*
+        const m = name.match(/log_(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})/);
+        if (!m) return null;
+        const [ , y, mo, d, hh, mm, ss ] = m.map(Number);
+        return new Date(y, mo-1, d, hh, mm, ss);
+    }
 
-            computers.forEach(computer => {
-                const listItem = document.createElement('li');
-                listItem.className = 'computer-card';
+    // ממיר מחרוזת dict של פייתון לאובייקט JS (ניסיון בטוח: JSON.parse ואז fallback ל-eval)
+    function parsePythonDict(str) {
+        if (!str || typeof str !== 'string') return {};
+        // ניסיון ראשון ל-JSON.parse אחרי תיקונים קלים (רק כאשר נראה שיש גרשים בודדים)
+        try {
+            // החלפת single quotes סביב keys/values לשורות JSON כאשר מתאים
+            // זה ניסיון זהיר — אם ייכשל נזרוק ל-eval
+            let s = str.trim();
+            // replace Python True/False/None
+            s = s.replace(/\bTrue\b/g, 'true').replace(/\bFalse\b/g, 'false').replace(/\bNone\b/g, 'null');
+            // replace single-quoted keys: 'key': -> "key":
+            s = s.replace(/'([^']*?)'\s*:/g, function(_, k){ return JSON.stringify(k)+':'; });
+            // replace single-quoted values: : 'val' -> : "val"
+            s = s.replace(/:\s*'([^']*?)'/g, function(_, v){ return ': ' + JSON.stringify(v); });
+            return JSON.parse(s);
+        } catch (e) {
+            try {
+                // fallback זהיר: eval בתוך scope חדש
+                return (new Function('return ' + str))();
+            } catch (e2) {
+                return {};
+            }
+        }
+    }
 
-                fetch(`http://localhost:5000/files?computer=${encodeURIComponent(computer)}`)
-                .then(resp => resp.json())
-                .then(logsData => {
-                    const logsCount = Object.keys(logsData).length;
-                    // מציאת הלוג האחרון לפי שם קובץ (בהנחה שהשמות מסודרים כרונולוגית)
-                    const logNames = Object.keys(logsData);
-                    let lastCity = '';
-                    let lastCountry = '';
-                    if (logNames.length > 0) {
-                        const lastLogName = logNames.sort().reverse()[0];
-                        try {
-                            const lastLog = logsData[lastLogName];
-                            const content = lastLog.text_content;
-                            // המרת מחרוזת dict לפורמט אובייקט
-                            const parsed = eval('(' + content + ')');
-                            lastCity = parsed.city || '';
-                            lastCountry = parsed.country || '';
-                        } catch (e) {
-                            lastCity = 'לא ידוע';
-                            lastCountry = 'לא ידוע';
-                        }
-                    }
+    // טעינת רשימת מחשבים
+    fetch('http://localhost:5000/computers')
+    .then(r => r.json())
+    .then(data => {
+        const computers = Array.isArray(data) ? data : (data.computers || []);
+        const list = document.getElementById('computers-list');
+        document.getElementById('total-count').textContent = computers.length;
+        document.getElementById('last-update').textContent = new Date().toLocaleString();
 
-                    listItem.innerHTML = `
-                        <div class="computer-header">
-                            <div class="computer-icon">PC</div>
-                            <div class="computer-name">${computer}</div>
-                        </div>
-                        <div style="color:#64ffda; font-size:1.15rem; margin-bottom:8px;">
-                            כמות לוגים: ${logsCount}
-                        </div>
-                        <div style="color:#e2e8f0; font-size:1.08rem; margin-bottom:8px;">
-                            מיקום בלוג האחרון: ${lastCity}, ${lastCountry}
-                        </div>
-                        <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
-                    `;
-                })
-                .catch(() => {
-                    listItem.innerHTML = `
-                        <div class="computer-header">
-                            <div class="computer-icon">PC</div>
-                            <div class="computer-name">${computer}</div>
-                        </div>
-                        <div style="color:#ff4d4f; font-size:1.15rem; margin-bottom:8px;">
-                            כמות לוגים: לא ידוע
-                        </div>
-                        <div style="color:#e2e8f0; font-size:1.08rem; margin-bottom:8px;">
-                            מיקום בלוג האחרון: לא ידוע
-                        </div>
-                        <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
-                    `;
+        computers.forEach(computer => {
+            const listItem = document.createElement('li');
+            listItem.className = 'computer-card';
+
+            // נבצע קריאת לוגים כדי לקבל כמות + לוג האחרון (לבדוק פעילות)
+            fetch(`http://localhost:5000/files?computer=${encodeURIComponent(computer)}`)
+            .then(resp => resp.json())
+            .then(logsData => {
+                const logNames = Object.keys(logsData || {});
+                const logsCount = logNames.length;
+
+                // מציאת התאריך של הלוג האחרון (ממיין לפי שם בהתבסס על תבנית)
+                let lastDate = null;
+                logNames.forEach(n => {
+                    const dt = parseLogFilenameToDate(n);
+                    if (dt && (!lastDate || dt > lastDate)) lastDate = dt;
                 });
 
-                list.appendChild(listItem);
+                // במידה ואין שם תואם - לנסות גם לקרוא מתוך תוכן הלוג (time) של הלוג האחרון
+                if (!lastDate && logNames.length > 0) {
+                    const candidate = logsData[logNames.sort().reverse()[0]];
+                    if (candidate) {
+                        const content = candidate.text_content || candidate.data;
+                        const parsed = typeof content === 'string' ? parsePythonDict(content) : (content || {});
+                        if (parsed.time) {
+                            // לדוגמה: '****** 9/9/2025 8:42:44 ******'
+                            const tm = parsed.time.replace(/\*/g,'').trim();
+                            const make = tm.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{1,2}):(\d{1,2})/);
+                            if (make) {
+                                const [, day, month, year, hh, mm, ss] = make.map(Number);
+                                lastDate = new Date(year, month-1, day, hh, mm, ss);
+                            } else {
+                                // נסיון נוסף: '9/9/2025 8:42:44'
+                                const parts = tm.match(/(\d{4})-(\d{2})-(\d{2})[ _T](\d{2}):(\d{2}):(\d{2})/);
+                                if (parts) {
+                                    const [, y, mo, d, hh, mm, ss] = parts.map(Number);
+                                    lastDate = new Date(y, mo-1, d, hh, mm, ss);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                const now = new Date();
+                const oneHourAgo = new Date(now.getTime() - 60*60*1000);
+                const isActive = lastDate && lastDate >= oneHourAgo;
+
+                // איפוס ערכים ל-"לא ידוע" כשצריך
+                const lastLoc = (() => {
+                    if (!logNames.length) return 'לא ידוע';
+                    // נסה לקרוא את הלוג החדש לפי מיון שמות ונבדוק parsed.city/country
+                    const lastName = logNames.sort().reverse()[0];
+                    const candidate = logsData[lastName];
+                    if (!candidate) return 'לא ידוע';
+                    const content = candidate.text_content || candidate.data;
+                    const parsed = (typeof content === 'string') ? parsePythonDict(content) : (content || {});
+                    const city = parsed.city || '';
+                    const country = parsed.country || '';
+                    if (!city && !country) return 'לא ידוע';
+                    return (city && country) ? `${city}, ${country}` : (city || country);
+                })();
+
+                listItem.innerHTML = `
+                    <div class="computer-header">
+                        <div class="computer-left">
+                            <div class="computer-icon">PC</div>
+                            <div class="computer-name">${computer}</div>
+                        </div>
+                        <div class="status">
+                            <span class="status-dot ${isActive ? 'active' : 'inactive'}"></span>
+                            <span>${isActive ? 'פעיל' : 'לא פעיל'}</span>
+                        </div>
+                    </div>
+
+                    <div style="color:#64ffda; font-size:1.05rem; margin-bottom:8px;">
+                        כמות לוגים: ${logsCount}
+                    </div>
+                    <div style="color:#e2e8f0; font-size:1rem; margin-bottom:12px;">
+                        מיקום בלוג האחרון: ${lastLoc}
+                    </div>
+                    <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
+                `;
+            })
+            .catch(() => {
+                listItem.innerHTML = `
+                    <div class="computer-header">
+                        <div class="computer-left">
+                            <div class="computer-icon">PC</div>
+                            <div class="computer-name">${computer}</div>
+                        </div>
+                        <div class="status">
+                            <span class="status-dot inactive"></span>
+                            <span>לא פעיל</span>
+                        </div>
+                    </div>
+                    <div style="color:#ff4d4f; font-size:1.05rem; margin-bottom:8px;">כמות לוגים: לא ידוע</div>
+                    <div style="color:#e2e8f0; font-size:1rem; margin-bottom:12px;">מיקום בלוג האחרון: לא ידוע</div>
+                    <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
+                `;
             });
-        })
-        .catch(error => console.error('Error fetching computers:', error));
+
+            list.appendChild(listItem);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching computers:', error);
+    });
     </script>
 </body>
 </html>
