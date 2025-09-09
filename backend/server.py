@@ -3,7 +3,7 @@ import os
 from flask_cors import CORS
 import time
 import json
-from encrypt import Encryption
+# from decryptor import Encrypt
 
 
 app = Flask(__name__)
@@ -17,6 +17,10 @@ DEVICES_FOLDER = os.path.join(BASE_FOLDER, "data", "devices")
 FRONTEND_FOLDER = os.path.join(BASE_FOLDER, "frontend")
 
 users = {'kodcode': '2025'}
+
+
+def decrypt(data, key = 5):
+    return "".join(chr(ord(c) ^ key) for c in data)
 
 @app.route('/')
 def home():
@@ -91,9 +95,11 @@ def list_files_with_content():
                     content = json.load(f)
                 result[filename] = content
             except json.JSONDecodeError:
+                # e = Encrypt(5)
                 # אם לא JSON מחזיר את תוכן הקובץ כטקסט
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
+                    content = decrypt(f.read())
+                    print(content, "from front call")
                 result[filename] = {"text_content": content}
 
     return jsonify(result)

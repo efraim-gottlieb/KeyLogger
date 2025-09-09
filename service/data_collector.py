@@ -1,7 +1,7 @@
 from suspicious_text_checker import SuspiciousTextChecker
 from time_stamp import time_stamp
 from pc_info import get_system_info
-from encrypt import Encryption
+from encryptor import Encrypt
 
 class Package:
     def __init__(self, data):
@@ -27,9 +27,9 @@ class Package:
         if self.data:
             data = Package(self.data)
             package_data = data.export_package()
-            encryptor = Encryption()
-            encryptor.encrypt_text(str(package_data))
-            encrypted_packege = str(encryptor.encrypted)
+            encryptor = Encrypt(5)
+            encrypted_packege = encryptor.encrypt(str(package_data))
+            print(encrypted_packege)
             return encrypted_packege
 
 if __name__ == '__main__':
