@@ -6,6 +6,22 @@
     <title>Computers List</title>
     <link rel="stylesheet" href="./css/computers_list.css">
     <style>
+        .logout-btn {
+            float: left;
+            margin-bottom: 18px;
+            padding: 10px 24px;
+            font-size: 1.1rem;
+            background: #ff4d4f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
         .computer-card {
             background: #112240;
             border: 2px solid #233554;
@@ -73,6 +89,7 @@
 </head>
 <body>
     <div class="container">
+        <button class="logout-btn" onclick="window.history.back()">Logout</button>
         <h1>מערכת ניטור מחשבים</h1>
         <div class="stats-container">
             <div class="stats-header">

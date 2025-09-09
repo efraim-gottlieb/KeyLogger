@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Ramat Gan', 'time': '****** 9/9/2025 13:8:2 ******', 'label': 'suspicious', 'suspicious words': ['virus'], 'data': {'\u202bכרטיסייה חדשה - Google Chrome\u202c': 'moshe virus'}}
