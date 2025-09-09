@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 8:45:35 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'computers_list.html - KeyLogger - Visual Studio Code': 'מת פרטים על המחשב אז צריך להסיר את הפרטים כביכיול..\nאבל שיהיה יפה ומסודר ככר'}}

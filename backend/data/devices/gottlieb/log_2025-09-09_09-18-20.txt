@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 9:18:19 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'מצגת1 - PowerPoint': '67'}}

@@ -5,9 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Computers List</title>
     <link rel="stylesheet" href="./css/computers_list.css">
+    <style>
+        .computer-card {
+            background: #112240;
+            border: 2px solid #233554;
+            border-radius: 14px;
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(100,255,218,0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            transition: box-shadow 0.2s;
+        }
+        .computer-card:hover {
+            box-shadow: 0 8px 32px rgba(100,255,218,0.18);
+            border-color: #64ffda;
+        }
+        .computer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .computer-icon {
+            background: #64ffda;
+            color: #112240;
+            font-weight: bold;
+            font-size: 1.3rem;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 16px;
+            box-shadow: 0 2px 8px rgba(100,255,218,0.12);
+        }
+        .computer-name {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #e2e8f0;
+            letter-spacing: 1px;
+        }
+        .computer-button {
+            margin-top: 18px;
+            padding: 10px 28px;
+            font-size: 1.15rem;
+            background: #64ffda;
+            color: #112240;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .computer-button:hover {
+            background: #52e0c4;
+        }
+        #computers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 28px;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <button onclick="window.history.back()" 
+                style="float:left; margin-bottom:18px; padding:10px 24px; font-size:1.1rem; background:#ff4d4f; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+            Logout
+        </button>
         <h1>מערכת ניטור מחשבים</h1>
         <div class="stats-container">
             <div class="stats-header">
@@ -25,37 +94,64 @@
             const list = document.getElementById('computers-list');
             document.getElementById('total-count').textContent = computers.length;
             document.getElementById('last-update').textContent = new Date().toLocaleString();
-            
+
             computers.forEach(computer => {
                 const listItem = document.createElement('li');
                 listItem.className = 'computer-card';
-                
-                listItem.innerHTML = `
-                    <div class="computer-header">
-                        <div class="computer-icon">PC</div>
-                        <div class="computer-name">${computer}</div>
-                    </div>
-                    <div class="computer-stats">
-                        <div class="stat-item">
-                            <div class="stat-label">קבצים</div>
-                            <div class="stat-value">0</div>
+
+                fetch(`http://localhost:5000/files?computer=${encodeURIComponent(computer)}`)
+                .then(resp => resp.json())
+                .then(logsData => {
+                    const logsCount = Object.keys(logsData).length;
+                    // מציאת הלוג האחרון לפי שם קובץ (בהנחה שהשמות מסודרים כרונולוגית)
+                    const logNames = Object.keys(logsData);
+                    let lastCity = '';
+                    let lastCountry = '';
+                    if (logNames.length > 0) {
+                        const lastLogName = logNames.sort().reverse()[0];
+                        try {
+                            const lastLog = logsData[lastLogName];
+                            const content = lastLog.text_content;
+                            // המרת מחרוזת dict לפורמט אובייקט
+                            const parsed = eval('(' + content + ')');
+                            lastCity = parsed.city || '';
+                            lastCountry = parsed.country || '';
+                        } catch (e) {
+                            lastCity = 'לא ידוע';
+                            lastCountry = 'לא ידוע';
+                        }
+                    }
+
+                    listItem.innerHTML = `
+                        <div class="computer-header">
+                            <div class="computer-icon">PC</div>
+                            <div class="computer-name">${computer}</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label">גודל</div>
-                            <div class="stat-value">0 KB</div>
+                        <div style="color:#64ffda; font-size:1.15rem; margin-bottom:8px;">
+                            כמות לוגים: ${logsCount}
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label">סטטוס</div>
-                            <div class="stat-value">פעיל</div>
+                        <div style="color:#e2e8f0; font-size:1.08rem; margin-bottom:8px;">
+                            מיקום בלוג האחרון: ${lastCity}, ${lastCountry}
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label">זמן פעילות</div>
-                            <div class="stat-value">0:00</div>
+                        <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
+                    `;
+                })
+                .catch(() => {
+                    listItem.innerHTML = `
+                        <div class="computer-header">
+                            <div class="computer-icon">PC</div>
+                            <div class="computer-name">${computer}</div>
                         </div>
-                    </div>
-                    <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
-                `;
-                
+                        <div style="color:#ff4d4f; font-size:1.15rem; margin-bottom:8px;">
+                            כמות לוגים: לא ידוע
+                        </div>
+                        <div style="color:#e2e8f0; font-size:1.08rem; margin-bottom:8px;">
+                            מיקום בלוג האחרון: לא ידוע
+                        </div>
+                        <button class="computer-button" onclick="window.location.href='computer_page.html?name=${encodeURIComponent(computer)}'">צפה בפרטים</button>
+                    `;
+                });
+
                 list.appendChild(listItem);
             });
         })

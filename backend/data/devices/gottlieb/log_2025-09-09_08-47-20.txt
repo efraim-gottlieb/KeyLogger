@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 8:47:19 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'computers_list.html - KeyLogger - Visual Studio Code': 'יף כפתור ניתוק תוסיף כמות לוגים למחשה זה עי שימוש ב'}}

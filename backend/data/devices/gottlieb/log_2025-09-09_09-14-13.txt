@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 9:14:13 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u200f\u200fחילוץ תיקיות דחוסות (מכווצות)': '\n', 'תלוש חודש 10 מירי גוטשיין - סייר הקבצים': '\x03'}}

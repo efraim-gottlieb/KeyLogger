@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 8:49:48 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202aKodCode KeyLogger - Google Chrome\u202c': '2025\n', 'computers_list.html - KeyLogger - Visual Studio Code': 'תוסיף לחצן ךםע'}}
