@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 8:51:11 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'computers_list.html - KeyLogger - Visual Studio Code': '\x13\x13', '\u202aComputers List - Google Chrome\u202c': ''}}

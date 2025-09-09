@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 9:10:8 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202aInbox (4) - efgo583208979@gmail.com - Gmail - Google Chrome\u202c': 'תלושע'}}

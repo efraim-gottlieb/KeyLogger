@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 9:12:31 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'תלוש חודש 10 מירי גוטשיין.pdf - Adobe Acrobat Pro DC (32-bit)': '543\x1a'}}

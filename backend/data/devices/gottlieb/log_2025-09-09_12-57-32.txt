@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Ramat Gan', 'time': '****** 9/9/2025 12:57:31 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'computer_page.html - KeyLogger - Visual Studio Code': 'hd t, v,ufi ak vecmho re t, vfu,r,\n'}}

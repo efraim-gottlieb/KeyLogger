@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 8:42:44 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'KeyLogger - סייר הקבצים': '\n', 'frontend - סייר הקבצים': '\n', '\u202aKodCode KeyLogger - Google Chrome\u202c': '2025\n'}}

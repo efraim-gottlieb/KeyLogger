@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 9:14:33 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'תלוש חודש 10 מירי גוטשיין - סייר הקבצים': '\n', 'חיפוש': 'פם\n', 'PowerPoint': '\n', 'מצגת1 - PowerPoint': '\x01\x16', 'קבל את Office המקורי': '\x03'}}

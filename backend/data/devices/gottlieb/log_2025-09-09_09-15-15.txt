@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 9:15:14 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'מצגת1 - PowerPoint': 'לתלת\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200e\u200f\u200f\u200f\u200fלת'}}

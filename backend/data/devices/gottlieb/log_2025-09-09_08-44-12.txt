@@ -1,1 +1,0 @@
-{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 8:44:10 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202bפרטי מחשב - Google Chrome\u202c': 'וירוס'}}
