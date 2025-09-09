@@ -140,7 +140,11 @@
     function renderFiles(filesData, searchTerm = "") {
         let filesHtml = '';
         let count = 0;
-        Object.entries(filesData).forEach(([filename, fileObj]) => {
+        // מיון שמות הקבצים מהחדש לישן (בהנחה שהשם כולל תאריך/שעה)
+        const sortedEntries = Object.entries(filesData)
+            .sort(([a], [b]) => b.localeCompare(a)); // ממיין הפוך
+
+        sortedEntries.forEach(([filename, fileObj]) => {
             let content = fileObj.text_content;
             let parsed = {};
             try {

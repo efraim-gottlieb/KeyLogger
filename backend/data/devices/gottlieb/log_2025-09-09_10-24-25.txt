@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 10:24:24 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'computer_page.html - KeyLogger - Visual Studio Code': '\x13'}}

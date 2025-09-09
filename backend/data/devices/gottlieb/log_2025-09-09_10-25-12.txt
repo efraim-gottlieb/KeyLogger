@@ -1,0 +1,1 @@
+{'computer name': 'gottlieb', 'country': 'IL', 'city': 'Rishon LeTsiyyon', 'time': '****** 9/9/2025 10:25:12 ******', 'label': 'not suspicious', 'suspicious words': [], 'data': {'\u202bכרטיסייה חדשה - Google Chrome\u202c': 'ת השינוי החדש במיון'}}
