@@ -47,7 +47,6 @@ class SuspiciousTextChecker:
             return "גבוה"
 
 
-# --- שימוש לדוגמה ---
 if __name__ == '__main__':
     txt = "ddos hack ."
     checker = SuspiciousTextChecker(txt, "suspicious_words.txt")

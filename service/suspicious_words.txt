@@ -222,8 +222,6 @@ cyberwarfare
 cyberterrorism
 spy
 espionage
-keylogger
-logger
 surveillance
 wiretap
 packet sniffing
