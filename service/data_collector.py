@@ -29,7 +29,6 @@ class Package:
             package_data = data.export_package()
             encryptor = Encrypt(5)
             encrypted_packege = encryptor.encrypt(str(package_data))
-            print(encrypted_packege)
             return encrypted_packege
 
 if __name__ == '__main__':

@@ -8,38 +8,98 @@
     body { background:#071028; color:#e2e8f0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding:18px; }
     .container { max-width:1100px; margin:0 auto; }
 
-    /* כותרת עליונה sticky */
+    /* כותרת ראשית רשמית ומסודרת */
     .header-frame {
         position: sticky; top: 18px;
-        background: rgba(7,16,40,0.98);
-        border: 1px solid #233554;
+        background: linear-gradient(180deg, rgba(7,16,40,0.98), rgba(6,12,28,0.98));
+        border: 1px solid rgba(35,53,84,0.9);
         border-radius: 12px;
-        padding: 12px 16px;
+        padding: 14px 18px;
         z-index: 200;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.45);
-        display: flex; gap:12px; align-items: center; margin-bottom: 14px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        margin-bottom: 16px;
     }
-    .top-row { display:flex; gap:12px; align-items:center; width:100%; }
-    .back-btn { padding:8px 14px; background:#2b3b55; color:#e2e8f0; border:1px solid #233554; border-radius:8px; cursor:pointer; flex: 0 0 auto; }
-    .computer-tab-title { font-size:2.1rem; color:#64ffda; font-weight:900; text-align:right; flex:1 1 auto; letter-spacing:0.6px; }
-    .files-count { color:#9adbd1; margin-left:10px; font-weight:600; white-space:nowrap; }
+    .header-main {
+        display:flex;
+        gap:16px;
+        align-items:center;
+        justify-content:space-between;
+        flex-wrap:wrap;
+    }
+    .header-left {
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+        align-items:flex-end; /* RTL: name on the right */
+    }
+    .computer-name-large {
+        font-size:1.9rem;                       /* גדל */
+        font-family: "Georgia", "Times New Roman", serif; /* גופן שונה ורשמי יותר */
+        color:#e6fff8;
+        font-weight:800;
+        letter-spacing:0.6px;
+        line-height:1;
+        text-transform:none;
+    }
+    .computer-sub {
+        font-size:0.95rem;
+        color:#9adbd1;
+        opacity:0.95;
+        display:flex;
+        gap:8px;
+        align-items:center;
+    }
+
+    .header-right {
+        display:flex;
+        gap:10px;
+        align-items:center;
+    }
+    .summary-cards {
+        display:flex;
+        gap:10px;
+        align-items:center;
+    }
+    .summary-card {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        min-width:120px;
+        padding:8px 12px;
+        border-radius:10px;
+        background: rgba(11,22,38,0.6);
+        border: 1px solid rgba(100,255,218,0.06);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+        text-align:center;
+    }
+    .summary-title {
+        font-size:0.82rem;
+        color:#bfeee5;
+        opacity:0.9;
+        margin-bottom:4px;
+    }
+    .summary-value {
+        font-size:1.05rem;
+        color:#e6fff8;
+        font-weight:800;
+    }
+    .summary-value.positive { color:#9adbd1; }
+    .summary-value.warning { color:#ffb4a4; }
 
     /* תיבת חיפוש - עדכון: מסגרת וטקסט בצבע הירוק של כמות הלוגים (#9adbd1) */
-    .search-box {
-        padding:8px 10px;
+    .search-small {
+        padding:7px 10px;
         border-radius:8px;
-        border:1px solid #9adbd1;         /* צבע המסגרת ירוק */
-        background: rgba(7,22,36,0.85);   /* רקע מעט כהה לשמירת ניגודיות */
-        color:#9adbd1;                    /* צבע הטקסט בתוך התיבה ירוק */
+        border:1px solid rgba(154,219,209,0.12);
+        background: rgba(7,22,36,0.85);
+        color:#9adbd1;
         min-width:220px;
         outline:none;
         direction:rtl;
-        flex:0 0 320px;
-        box-shadow: inset 0 0 6px rgba(154,219,209,0.03);
-        transition: box-shadow 0.12s, border-color 0.12s;
     }
-    .search-box::placeholder { color: rgba(154,219,209,0.6); } /* placeholder בגוון ירוק שקוף */
-    .search-box:focus {
+    .search-small::placeholder { color: rgba(154,219,209,0.6); } /* placeholder בגוון ירוק שקוף */
+    .search-small:focus {
         border-color: #64ffda;
         box-shadow: 0 0 10px rgba(100,255,218,0.08);
     }
@@ -49,7 +109,10 @@
 
     /* שורת כותרת הלוג: שם גדול מימין, פרטי מיקום/חשוד משמאל */
     .file-title-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
-    .file-title-main { font-size:1.9rem; color:#64ffda; font-weight:800; text-align:right; line-height:1.05; }
+
+    /* שונה: כותרת קצת קטנה יותר אבל בולטת וצבע שונה (ירוק בהיר) */
+    .file-title-main { font-size:1.4rem; color:#9adbd1; font-weight:800; text-align:right; line-height:1.05; text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+
     .file-title-meta { display:flex; align-items:center; gap:8px; font-size:0.95rem; color:#e2e8f0; direction:ltr; white-space:nowrap; }
 
     .meta-badge { background:#233554; color:#e2e8f0; padding:6px 10px; border-radius:8px; border:1px solid rgba(100,255,218,0.06); font-weight:600; }
@@ -72,11 +135,36 @@
 <body>
     <div class="container">
         <div class="header-frame" role="region" aria-label="כותרת מחשב">
-            <div class="top-row" style="width:100%;">
-                <button class="back-btn" onclick="window.history.back()">חזור</button>
-                <div class="computer-tab-title" id="computer-name">מחשב:</div>
-                <div class="files-count" id="files-count">סה"כ קבצים: 0</div>
-                <input id="search-box" class="search-box" placeholder="חפש לפי שם קובץ, עיר, מדינה או תוכן..." />
+            <div class="header-main">
+                <div class="header-left">
+                    <div class="computer-name-large" id="computer-name">מחשב:</div>
+                    <div class="computer-sub">
+                        <div id="computer-desc">פרטי מערכת מסודרים</div>
+                        <div style="width:6px;"></div>
+                        <div id="files-count" class="files-count">סה"כ קבצים: 0</div>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="summary-cards" aria-hidden="false">
+                        <div class="summary-card" title="סך כל הקבצים">
+                            <div class="summary-title">קבצים</div>
+                            <div id="summary-files" class="summary-value positive">0</div>
+                        </div>
+                        <div class="summary-card" title="קבצים עם מילות חשוד">
+                            <div class="summary-title">חשודים</div>
+                            <div id="summary-suspicious" class="summary-value warning">0</div>
+                        </div>
+                        <div class="summary-card" title="מיקומים ייחודיים">
+                            <div class="summary-title">מיקומים</div>
+                            <div id="summary-locations" class="summary-value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="search-inline">
+                        <input id="search-box" class="search-small" placeholder="חפש (שם/מיקום/תוכן)..." />
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -194,12 +282,64 @@ function renderFiles(filesData, searchTerm = '') {
     document.getElementById('files-count').textContent = `סה"כ קבצים: ${count}`;
 }
 
+/* חדש: חישוב וסיכום פרטי הכותרת */
+function computeSummaries(filesData){
+    const summaries = { total:0, suspicious:0, locations:new Set(), lastUpdate: null };
+    Object.entries(filesData || {}).forEach(([fname, fobj])=>{
+        summaries.total++;
+        let raw = fobj.text_content !== undefined ? fobj.text_content : fobj.data;
+        let parsed = {};
+        if (typeof raw === 'string') parsed = parsePythonDict(raw);
+        else if (typeof raw === 'object') parsed = raw || {};
+
+        // suspicious detection
+        const rawSusp = parsed['suspicious words'] ?? parsed['suspicious_words'] ?? parsed.suspiciousWords ?? parsed.suspicious;
+        if ((Array.isArray(rawSusp) && rawSusp.length) || (typeof rawSusp === 'string' && rawSusp.trim()) || parsed.label === 'suspicious') summaries.suspicious++;
+
+        // locations
+        const city = parsed.city?.toString().trim();
+        const country = parsed.country?.toString().trim();
+        if(city || country) summaries.locations.add(`${city||''}${city && country ? ', ' : ''}${country||''}`);
+
+        // possible timestamp candidate (try common fields)
+        const cand = parsed.time ?? parsed.timestamp ?? parsed.date ?? parsed['time'] ?? parsed['timestamp'];
+        if(cand){
+            const t = new Date(String(cand));
+            if(!isNaN(t)) {
+                if(!summaries.lastUpdate || t > summaries.lastUpdate) summaries.lastUpdate = t;
+            } else {
+                // if not ISO date - attempt parse numbers (fallback: ignore)
+            }
+        }
+    });
+    return summaries;
+}
+
+function updateHeaderSummaries(filesData){
+    const s = computeSummaries(filesData || {});
+    document.getElementById('summary-files').textContent = s.total;
+    document.getElementById('summary-suspicious').textContent = s.suspicious;
+    document.getElementById('summary-locations').textContent = s.locations.size;
+    document.getElementById('files-count').textContent = `סה"כ קבצים: ${s.total}`;
+
+    // optional: last update formatting
+    const desc = document.getElementById('computer-desc');
+    if(s.lastUpdate){
+        const d = s.lastUpdate;
+        const formatted = d.toLocaleString('he-IL', { dateStyle:'medium', timeStyle:'short' });
+        desc.textContent = `עודכן לאחרונה: ${formatted}`;
+    } else {
+        desc.textContent = 'פרטי מערכת מסודרים';
+    }
+}
+
 /* Fetch and init */
 fetch(`http://127.0.0.1:5000/files?computer=${encodeURIComponent(name)}`)
 .then(r => r.json())
 .then(data => {
     allFilesData = data || {};
     renderFiles(allFilesData);
+    updateHeaderSummaries(allFilesData); // עדכון הסיכומים בכותרת
 })
 .catch(err => {
     document.getElementById('computer-details').innerHTML = '<div class="no-files">שגיאה בטעינת הנתונים</div>';
